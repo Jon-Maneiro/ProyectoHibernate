@@ -33,7 +33,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "C:/Users/9FDAM08/Desktop/ProyectoHibernate/ProyectoHibernate/lib/mysql-connector-java-8.0.23.jar",
-    "project.structure.last.edited": "Libraries",
+    "project.structure.last.edited": "Facets",
     "project.structure.proportion": "0.15917969",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "preferences.pluginManager"
@@ -45,6 +45,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\9FDAM08\Desktop\ProyectoHibernate\ProyectoHibernate\ProyectoHibernateSwing\src\view" />
+    </key>
     <key name="ImportMappingsDialog.RecentPackages">
       <recent name="com.company" />
     </key>
@@ -58,6 +61,9 @@
       <option name="presentableId" value="Default" />
       <updated>1669656883919</updated>
       <workItem from="1669656885076" duration="1123000" />
+      <workItem from="1669658019955" duration="455000" />
+      <workItem from="1669658484726" duration="144000" />
+      <workItem from="1669658638092" duration="7918000" />
     </task>
     <servers />
   </component>

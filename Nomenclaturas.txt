@@ -1,0 +1,8 @@
+--Interfaz--
+
+meXXXX - Menu
+memeXXXX- Menu Inside Menu
+miXXXX - Menu Item
+tfXXXX - Text Field
+XYXX - Letra para indicar pertenencia a algo mayor
+btnXXX - Boton
