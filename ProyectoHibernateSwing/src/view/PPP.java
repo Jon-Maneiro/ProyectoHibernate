@@ -4,8 +4,16 @@
 
 package view;
 
+import com.company.PiezasEntity;
+import com.company.ProveedoresEntity;
+import com.company.ProyectosEntity;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+import util.HibernateUtil;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 import javax.swing.*;
 
 /**
@@ -22,7 +30,35 @@ public class PPP extends JFrame {
     }
 
     private void cargarDatosEnComboBox(){
-        
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        String hql = "from ProveedoresEntity";
+        Query query = sesion.createQuery(hql);
+        List<ProveedoresEntity> proveedores = query.list();
+
+        hql = "from PiezasEntity ";
+        query = sesion.createQuery(hql);
+        List<PiezasEntity> piezas = query.list();
+
+        hql = "from ProyectosEntity ";
+        query = sesion.createQuery(hql);
+        List<ProyectosEntity> proyectos = query.list();
+
+        JComboBox cbProv = cbCodProv;
+        JComboBox cbPie = cbCodPiez;
+        JComboBox cbProy = cbCodProy;
+
+        for(ProveedoresEntity p:proveedores){
+            cbProv.addItem(p.getCodigo());
+        }
+        for(PiezasEntity p:piezas){
+            cbPie.addItem(p.getCodigo());
+        }
+        for(ProyectosEntity p:proyectos){
+            cbProy.addItem(p.getCodigo());
+        }
+
+
+        HibernateUtil.shutdown();
     }
 
     private void initComponents() {
