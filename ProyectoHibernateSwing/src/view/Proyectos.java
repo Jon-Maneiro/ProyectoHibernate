@@ -1,5 +1,5 @@
 /*
- * Created by JFormDesigner on Mon Nov 28 20:37:59 CET 2022
+ * Created by JFormDesigner on Mon Dec 12 18:48:18 CET 2022
  */
 
 package view;
@@ -12,8 +12,8 @@ import javax.swing.border.*;
 /**
  * @author Jon Maneiro García
  */
-public class Proveedores extends JFrame {
-    public Proveedores() {
+public class Proyectos extends JFrame {
+    public Proyectos() {
         initComponents();
     }
 
@@ -25,21 +25,18 @@ public class Proveedores extends JFrame {
             tb.setSelectedIndex(1);
         }
     }
-
     private void cerrarVentana(ActionEvent e) {
         this.dispose();
     }
 
     private void vaciarCampos(ActionEvent e) {
-        JTextField tfCod = this.tfGCodProv;
+        JTextField tfCod = this.tfGCodProy;
         JTextField tfNom = this.tfGNombre;
-        JTextField tfApe = this.tfGApellidos;
-        JTextField tfDir = this.tfGDireccion;
+        JTextField tfCiu = this.tfGCiudad;
 
         tfCod.setText("");
         tfNom.setText("");
-        tfApe.setText("");
-        tfDir.setText("");
+        tfCiu.setText("");
     }
 
     private void initComponents() {
@@ -54,27 +51,25 @@ public class Proveedores extends JFrame {
         label7 = new JLabel();
         tfCCodigo = new JTextField();
         tfCNombre = new JTextField();
-        tfCDireccion = new JTextField();
+        tfCCiudad = new JTextField();
         btnFiltrar = new JButton();
-        btnVolver = new JButton();
+        btnVolver2 = new JButton();
         panel1 = new JPanel();
         label1 = new JLabel();
         label2 = new JLabel();
         label3 = new JLabel();
-        label4 = new JLabel();
-        tfGCodProv = new JTextField();
+        tfGCodProy = new JTextField();
         tfGNombre = new JTextField();
-        tfGApellidos = new JTextField();
-        tfGDireccion = new JTextField();
+        tfGCiudad = new JTextField();
         btnLimpiar = new JButton();
         btnInsertar = new JButton();
         btnModificar = new JButton();
         btnEliminar = new JButton();
-        btnVolver2 = new JButton();
+        btnVolver = new JButton();
 
         //======== this ========
         var contentPane = getContentPane();
-        contentPane.setLayout(new BorderLayout());
+        contentPane.setLayout(null);
 
         //======== dialogPane ========
         {
@@ -105,26 +100,26 @@ public class Proveedores extends JFrame {
                         label6.setBounds(new Rectangle(new Point(10, 245), label6.getPreferredSize()));
 
                         //---- label7 ----
-                        label7.setText("Direccion");
+                        label7.setText("Ciudad");
                         panel2.add(label7);
                         label7.setBounds(new Rectangle(new Point(10, 280), label7.getPreferredSize()));
                         panel2.add(tfCCodigo);
                         tfCCodigo.setBounds(75, 205, 130, tfCCodigo.getPreferredSize().height);
                         panel2.add(tfCNombre);
                         tfCNombre.setBounds(75, 240, 440, 30);
-                        panel2.add(tfCDireccion);
-                        tfCDireccion.setBounds(75, 275, 440, 30);
+                        panel2.add(tfCCiudad);
+                        tfCCiudad.setBounds(75, 275, 440, 30);
 
                         //---- btnFiltrar ----
                         btnFiltrar.setText("Filtrar");
                         panel2.add(btnFiltrar);
                         btnFiltrar.setBounds(new Rectangle(new Point(10, 325), btnFiltrar.getPreferredSize()));
 
-                        //---- btnVolver ----
-                        btnVolver.setText("Volver");
-                        btnVolver.addActionListener(e -> cerrarVentana(e));
-                        panel2.add(btnVolver);
-                        btnVolver.setBounds(new Rectangle(new Point(525, 325), btnVolver.getPreferredSize()));
+                        //---- btnVolver2 ----
+                        btnVolver2.setText("Volver");
+                        btnVolver2.addActionListener(e -> cerrarVentana(e));
+                        panel2.add(btnVolver2);
+                        btnVolver2.setBounds(new Rectangle(new Point(525, 325), btnVolver2.getPreferredSize()));
 
                         {
                             // compute preferred size
@@ -141,14 +136,14 @@ public class Proveedores extends JFrame {
                             panel2.setPreferredSize(preferredSize);
                         }
                     }
-                    tabbedPane1.addTab("Consultar Proveedores", panel2);
+                    tabbedPane1.addTab("Consultar Proyectos", panel2);
 
                     //======== panel1 ========
                     {
                         panel1.setLayout(null);
 
                         //---- label1 ----
-                        label1.setText("Codigo Proveedor");
+                        label1.setText("Codigo Proyecto");
                         panel1.add(label1);
                         label1.setBounds(new Rectangle(new Point(10, 15), label1.getPreferredSize()));
 
@@ -158,22 +153,15 @@ public class Proveedores extends JFrame {
                         label2.setBounds(new Rectangle(new Point(10, 45), label2.getPreferredSize()));
 
                         //---- label3 ----
-                        label3.setText("Apellidos");
+                        label3.setText("Ciudad");
                         panel1.add(label3);
                         label3.setBounds(new Rectangle(new Point(10, 75), label3.getPreferredSize()));
-
-                        //---- label4 ----
-                        label4.setText("Direccion");
-                        panel1.add(label4);
-                        label4.setBounds(new Rectangle(new Point(10, 105), label4.getPreferredSize()));
-                        panel1.add(tfGCodProv);
-                        tfGCodProv.setBounds(125, 10, 110, tfGCodProv.getPreferredSize().height);
+                        panel1.add(tfGCodProy);
+                        tfGCodProy.setBounds(125, 10, 110, tfGCodProy.getPreferredSize().height);
                         panel1.add(tfGNombre);
                         tfGNombre.setBounds(125, 40, 440, 30);
-                        panel1.add(tfGApellidos);
-                        tfGApellidos.setBounds(125, 70, 440, 30);
-                        panel1.add(tfGDireccion);
-                        tfGDireccion.setBounds(125, 100, 440, 30);
+                        panel1.add(tfGCiudad);
+                        tfGCiudad.setBounds(125, 70, 440, 30);
 
                         //---- btnLimpiar ----
                         btnLimpiar.setText("Limpiar");
@@ -196,11 +184,11 @@ public class Proveedores extends JFrame {
                         panel1.add(btnEliminar);
                         btnEliminar.setBounds(new Rectangle(new Point(425, 250), btnEliminar.getPreferredSize()));
 
-                        //---- btnVolver2 ----
-                        btnVolver2.setText("Volver");
-                        btnVolver2.addActionListener(e -> cerrarVentana(e));
-                        panel1.add(btnVolver2);
-                        btnVolver2.setBounds(new Rectangle(new Point(525, 325), btnVolver2.getPreferredSize()));
+                        //---- btnVolver ----
+                        btnVolver.setText("Volver");
+                        btnVolver.addActionListener(e -> cerrarVentana(e));
+                        panel1.add(btnVolver);
+                        btnVolver.setBounds(new Rectangle(new Point(525, 325), btnVolver.getPreferredSize()));
 
                         {
                             // compute preferred size
@@ -217,7 +205,7 @@ public class Proveedores extends JFrame {
                             panel1.setPreferredSize(preferredSize);
                         }
                     }
-                    tabbedPane1.addTab("Gestion Proveedores", panel1);
+                    tabbedPane1.addTab("Gestion Proyectos", panel1);
                 }
                 contentPanel.add(tabbedPane1);
                 tabbedPane1.setBounds(0, 0, 610, 395);
@@ -255,7 +243,23 @@ public class Proveedores extends JFrame {
                 dialogPane.setPreferredSize(preferredSize);
             }
         }
-        contentPane.add(dialogPane, BorderLayout.CENTER);
+        contentPane.add(dialogPane);
+        dialogPane.setBounds(new Rectangle(new Point(0, 0), dialogPane.getPreferredSize()));
+
+        {
+            // compute preferred size
+            Dimension preferredSize = new Dimension();
+            for(int i = 0; i < contentPane.getComponentCount(); i++) {
+                Rectangle bounds = contentPane.getComponent(i).getBounds();
+                preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
+                preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
+            }
+            Insets insets = contentPane.getInsets();
+            preferredSize.width += insets.right;
+            preferredSize.height += insets.bottom;
+            contentPane.setMinimumSize(preferredSize);
+            contentPane.setPreferredSize(preferredSize);
+        }
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
@@ -272,22 +276,20 @@ public class Proveedores extends JFrame {
     private JLabel label7;
     private JTextField tfCCodigo;
     private JTextField tfCNombre;
-    private JTextField tfCDireccion;
+    private JTextField tfCCiudad;
     private JButton btnFiltrar;
-    private JButton btnVolver;
+    private JButton btnVolver2;
     private JPanel panel1;
     private JLabel label1;
     private JLabel label2;
     private JLabel label3;
-    private JLabel label4;
-    private JTextField tfGCodProv;
+    private JTextField tfGCodProy;
     private JTextField tfGNombre;
-    private JTextField tfGApellidos;
-    private JTextField tfGDireccion;
+    private JTextField tfGCiudad;
     private JButton btnLimpiar;
     private JButton btnInsertar;
     private JButton btnModificar;
     private JButton btnEliminar;
-    private JButton btnVolver2;
+    private JButton btnVolver;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

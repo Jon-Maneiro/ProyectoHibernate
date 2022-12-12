@@ -11,7 +11,7 @@ import net.miginfocom.swing.*;
 
 
 /**
- * @author unknown
+ * @author Jon Maneiro García
  */
 public class Inicio extends JFrame {
     public Inicio() {
@@ -23,27 +23,55 @@ public class Inicio extends JFrame {
         info.setVisible(true);
     }
 
+    private void abrirConsultarProveedores(ActionEvent e) {
+        Proveedores prov = new Proveedores();
+        prov.iniciarEnPestaña(true);
+        prov.setVisible(true);
+    }
+    private void abrirGestionProveedores(ActionEvent e) {
+        Proveedores prov = new Proveedores();
+        prov.iniciarEnPestaña(false);
+        prov.setVisible(true);
+    }
+    private void abrirConsultarPiezas(ActionEvent e) {
+        Piezas piez = new Piezas();
+        piez.iniciarEnPestaña(true);
+        piez.setVisible(true);
+    }
+    private void abrirGestionarPiezas(ActionEvent e) {
+        Piezas piez = new Piezas();
+        piez.iniciarEnPestaña(false);
+        piez.setVisible(true);
+    }
+
+    private void abrirConsultarProyectos(ActionEvent e) {
+        Proyectos proy = new Proyectos();
+        proy.iniciarEnPestaña(true);
+        proy.setVisible(true);
+    }
+
+    private void abrirGestionProyectos(ActionEvent e) {
+        Proyectos proy = new Proyectos();
+        proy.iniciarEnPestaña(false);
+        proy.setVisible(true);
+    }
+
+
+
+
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         menuBar1 = new JMenuBar();
         meBBDD = new JMenu();
         meProveedores = new JMenu();
-        memeGestProv = new JMenu();
-        miGPInsert = new JMenuItem();
-        miGPModif = new JMenuItem();
-        miGPDelete = new JMenuItem();
+        miGestProv = new JMenuItem();
         miConsProv = new JMenuItem();
         mePiezas = new JMenu();
-        memeGestPiez = new JMenu();
-        miGPiInsert = new JMenuItem();
-        miGPiModif = new JMenuItem();
-        miGPiDelete = new JMenuItem();
+        miGestPiez = new JMenuItem();
         miConsPiez = new JMenuItem();
         meProyectos = new JMenu();
-        memeGestProy = new JMenu();
-        miGPrInsert = new JMenuItem();
-        miGPrModif = new JMenuItem();
-        miGPrDelete = new JMenuItem();
+        miGestProy = new JMenuItem();
         miConsProy = new JMenuItem();
         meGestion = new JMenu();
         miProvPieProy = new JMenuItem();
@@ -72,26 +100,14 @@ public class Inicio extends JFrame {
             {
                 meProveedores.setText("Proveedores");
 
-                //======== memeGestProv ========
-                {
-                    memeGestProv.setText("Gestion Proveedores");
-
-                    //---- miGPInsert ----
-                    miGPInsert.setText("Insertar");
-                    memeGestProv.add(miGPInsert);
-
-                    //---- miGPModif ----
-                    miGPModif.setText("Modificar");
-                    memeGestProv.add(miGPModif);
-
-                    //---- miGPDelete ----
-                    miGPDelete.setText("Borrar");
-                    memeGestProv.add(miGPDelete);
-                }
-                meProveedores.add(memeGestProv);
+                //---- miGestProv ----
+                miGestProv.setText("Gestionar Proveedores");
+                miGestProv.addActionListener(e -> abrirGestionProveedores(e));
+                meProveedores.add(miGestProv);
 
                 //---- miConsProv ----
                 miConsProv.setText("Consultar Proveedores");
+                miConsProv.addActionListener(e -> abrirConsultarProveedores(e));
                 meProveedores.add(miConsProv);
             }
             menuBar1.add(meProveedores);
@@ -100,26 +116,14 @@ public class Inicio extends JFrame {
             {
                 mePiezas.setText("Piezas");
 
-                //======== memeGestPiez ========
-                {
-                    memeGestPiez.setText("Gestion Piezas");
-
-                    //---- miGPiInsert ----
-                    miGPiInsert.setText("Insertar");
-                    memeGestPiez.add(miGPiInsert);
-
-                    //---- miGPiModif ----
-                    miGPiModif.setText("Modificar");
-                    memeGestPiez.add(miGPiModif);
-
-                    //---- miGPiDelete ----
-                    miGPiDelete.setText("Borrar");
-                    memeGestPiez.add(miGPiDelete);
-                }
-                mePiezas.add(memeGestPiez);
+                //---- miGestPiez ----
+                miGestPiez.setText("Gestionar Piezas");
+                miGestPiez.addActionListener(e -> abrirGestionarPiezas(e));
+                mePiezas.add(miGestPiez);
 
                 //---- miConsPiez ----
                 miConsPiez.setText("Consultar Piezas");
+                miConsPiez.addActionListener(e -> abrirConsultarPiezas(e));
                 mePiezas.add(miConsPiez);
             }
             menuBar1.add(mePiezas);
@@ -128,26 +132,14 @@ public class Inicio extends JFrame {
             {
                 meProyectos.setText("Proyectos");
 
-                //======== memeGestProy ========
-                {
-                    memeGestProy.setText("Gestionar Proyectos");
-
-                    //---- miGPrInsert ----
-                    miGPrInsert.setText("Insertar");
-                    memeGestProy.add(miGPrInsert);
-
-                    //---- miGPrModif ----
-                    miGPrModif.setText("Modificar");
-                    memeGestProy.add(miGPrModif);
-
-                    //---- miGPrDelete ----
-                    miGPrDelete.setText("Borrar");
-                    memeGestProy.add(miGPrDelete);
-                }
-                meProyectos.add(memeGestProy);
+                //---- miGestProy ----
+                miGestProy.setText("Gestionar Proyectos");
+                miGestProy.addActionListener(e -> abrirGestionProyectos(e));
+                meProyectos.add(miGestProy);
 
                 //---- miConsProy ----
                 miConsProy.setText("Consultar Proyectos");
+                miConsProy.addActionListener(e -> abrirConsultarProyectos(e));
                 meProyectos.add(miConsProy);
             }
             menuBar1.add(meProyectos);
@@ -215,22 +207,13 @@ public class Inicio extends JFrame {
     private JMenuBar menuBar1;
     private JMenu meBBDD;
     private JMenu meProveedores;
-    private JMenu memeGestProv;
-    private JMenuItem miGPInsert;
-    private JMenuItem miGPModif;
-    private JMenuItem miGPDelete;
+    private JMenuItem miGestProv;
     private JMenuItem miConsProv;
     private JMenu mePiezas;
-    private JMenu memeGestPiez;
-    private JMenuItem miGPiInsert;
-    private JMenuItem miGPiModif;
-    private JMenuItem miGPiDelete;
+    private JMenuItem miGestPiez;
     private JMenuItem miConsPiez;
     private JMenu meProyectos;
-    private JMenu memeGestProy;
-    private JMenuItem miGPrInsert;
-    private JMenuItem miGPrModif;
-    private JMenuItem miGPrDelete;
+    private JMenuItem miGestProy;
     private JMenuItem miConsProy;
     private JMenu meGestion;
     private JMenuItem miProvPieProy;

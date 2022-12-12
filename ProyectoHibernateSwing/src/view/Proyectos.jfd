@@ -3,7 +3,7 @@ JFDML JFormDesigner: "8.0.0.0.194" Java: "17.0.4.1" encoding: "UTF-8"
 new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
-		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 			name: "this"
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 				name: "dialogPane"
@@ -38,7 +38,7 @@ new FormModel {
 							} )
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "label7"
-								"text": "Direccion"
+								"text": "Ciudad"
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 								"x": 10
 								"y": 280
@@ -59,7 +59,7 @@ new FormModel {
 								"y": 240
 							} )
 							add( new FormComponent( "javax.swing.JTextField" ) {
-								name: "tfCDireccion"
+								name: "tfCCiudad"
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 								"width": 440
 								"height": 30
@@ -74,7 +74,7 @@ new FormModel {
 								"y": 325
 							} )
 							add( new FormComponent( "javax.swing.JButton" ) {
-								name: "btnVolver"
+								name: "btnVolver2"
 								"text": "Volver"
 								addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "cerrarVentana", true ) )
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
@@ -82,13 +82,13 @@ new FormModel {
 								"y": 325
 							} )
 						}, new FormLayoutConstraints( null ) {
-							"title": "Consultar Proveedores"
+							"title": "Consultar Proyectos"
 						} )
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 							name: "panel1"
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "label1"
-								"text": "Codigo Proveedor"
+								"text": "Codigo Proyecto"
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 								"x": 10
 								"y": 15
@@ -102,20 +102,13 @@ new FormModel {
 							} )
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "label3"
-								"text": "Apellidos"
+								"text": "Ciudad"
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 								"x": 10
 								"y": 75
 							} )
-							add( new FormComponent( "javax.swing.JLabel" ) {
-								name: "label4"
-								"text": "Direccion"
-							}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-								"x": 10
-								"y": 105
-							} )
 							add( new FormComponent( "javax.swing.JTextField" ) {
-								name: "tfGCodProv"
+								name: "tfGCodProy"
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 								"x": 125
 								"y": 10
@@ -130,20 +123,12 @@ new FormModel {
 								"y": 40
 							} )
 							add( new FormComponent( "javax.swing.JTextField" ) {
-								name: "tfGApellidos"
+								name: "tfGCiudad"
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 								"width": 440
 								"height": 30
 								"x": 125
 								"y": 70
-							} )
-							add( new FormComponent( "javax.swing.JTextField" ) {
-								name: "tfGDireccion"
-							}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-								"width": 440
-								"height": 30
-								"x": 125
-								"y": 100
 							} )
 							add( new FormComponent( "javax.swing.JButton" ) {
 								name: "btnLimpiar"
@@ -175,7 +160,7 @@ new FormModel {
 								"y": 250
 							} )
 							add( new FormComponent( "javax.swing.JButton" ) {
-								name: "btnVolver2"
+								name: "btnVolver"
 								"text": "Volver"
 								addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "cerrarVentana", true ) )
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
@@ -183,7 +168,7 @@ new FormModel {
 								"y": 325
 							} )
 						}, new FormLayoutConstraints( null ) {
-							"title": "Gestion Proveedores"
+							"title": "Gestion Proyectos"
 						} )
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 						"x": 0
@@ -196,8 +181,9 @@ new FormModel {
 					"y": 12
 					"width": 609
 				} )
-			}, new FormLayoutConstraints( class java.lang.String ) {
-				"value": "Center"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 0
+				"y": 0
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )

@@ -10,7 +10,7 @@ import javax.swing.*;
 import net.miginfocom.swing.*;
 
 /**
- * @author unknown
+ * @author Jon Maneiro García
  */
 public class Informacion extends JFrame {
     public Informacion() {

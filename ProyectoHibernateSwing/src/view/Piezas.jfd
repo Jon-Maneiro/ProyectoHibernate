@@ -1,0 +1,191 @@
+JFDML JFormDesigner: "8.0.0.0.194" Java: "17.0.4.1" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "this"
+			add( new FormContainer( "javax.swing.JTabbedPane", new FormLayoutManager( class javax.swing.JTabbedPane ) ) {
+				name: "tabbedPane1"
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+					name: "panel2"
+					add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+						name: "scrollPane1"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"width": 600
+						"height": 190
+						"x": 0
+						"y": 5
+					} )
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "tfCNombre"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"width": 440
+						"height": 30
+						"x": 65
+						"y": 235
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label6"
+						"text": "Nombre"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"width": 44
+						"height": 16
+						"x": 0
+						"y": 240
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label5"
+						"text": "Codigo"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"width": 39
+						"height": 16
+						"x": 0
+						"y": 205
+					} )
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "tfCCodigo"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"width": 130
+						"height": 30
+						"x": 65
+						"y": 200
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "btnFiltrar"
+						"text": "Filtrar"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"width": 78
+						"height": 30
+						"x": 0
+						"y": 280
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "btnVolver"
+						"text": "Volver"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "cerrarVentana", true ) )
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"x": 520
+						"y": 320
+					} )
+				}, new FormLayoutConstraints( null ) {
+					"title": "Consultar Piezas"
+				} )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+					name: "panel3"
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "tfGDescripcion"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"width": 440
+						"x": 120
+						"y": 95
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label4"
+						"text": "Descripcion"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"x": 5
+						"y": 100
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label3"
+						"text": "Precio"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"x": 5
+						"y": 70
+					} )
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "tfGPrecio"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"width": 440
+						"x": 120
+						"y": 65
+					} )
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "tfGNombre"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"width": 440
+						"x": 120
+						"y": 35
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label2"
+						"text": "Nombre"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"x": 5
+						"y": 40
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label1"
+						"text": "Codigo Pieza"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"x": 5
+						"y": 10
+					} )
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "tfGCodPiez"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"width": 110
+						"x": 120
+						"y": 5
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "btnLimpiar"
+						"text": "Limpiar"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "vaciarCampos", true ) )
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"width": 78
+						"height": 30
+						"x": 120
+						"y": 250
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "btnInsertar"
+						"text": "Insertar"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"width": 78
+						"height": 30
+						"x": 220
+						"y": 250
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "btnModificar"
+						"text": "Modificar"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"width": 85
+						"height": 30
+						"x": 320
+						"y": 250
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "btnEliminar"
+						"text": "Eliminar"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"width": 78
+						"height": 30
+						"x": 420
+						"y": 250
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "btnVolver2"
+						"text": "Volver"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "cerrarVentana", true ) )
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"x": 520
+						"y": 320
+					} )
+				}, new FormLayoutConstraints( null ) {
+					"title": "Gestion Piezas"
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 15
+				"y": 15
+				"width": 605
+				"height": 390
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 635, 450 )
+		} )
+	}
+}
