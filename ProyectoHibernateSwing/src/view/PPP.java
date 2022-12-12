@@ -14,10 +14,15 @@ import javax.swing.*;
 public class PPP extends JFrame {
     public PPP() {
         initComponents();
+        cargarDatosEnComboBox();
     }
 
     private void cerrarVentana(ActionEvent e) {
         this.dispose();
+    }
+
+    private void cargarDatosEnComboBox(){
+        
     }
 
     private void initComponents() {

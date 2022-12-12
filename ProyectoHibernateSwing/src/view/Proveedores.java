@@ -4,6 +4,10 @@
 
 package view;
 
+import util.HibernateUtil;
+import com.company.ProveedoresEntity;
+import org.hibernate.Session;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -40,6 +44,73 @@ public class Proveedores extends JFrame {
         tfNom.setText("");
         tfApe.setText("");
         tfDir.setText("");
+    }
+
+    private void insertarProveedor(ActionEvent e) {
+        if(checkCodeField() && checkNameField() && checkLastNameField() && checkAddressField()){
+            String codigo = tfGCodProv.getText();
+            String nombre = tfGNombre.getText();
+            String apellido = tfGApellidos.getText();
+            String direccion = tfCDireccion.getText();
+            //Empezamos la insercion
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+
+            ProveedoresEntity prov = new ProveedoresEntity();
+            prov.setCodigo(codigo);
+            prov.setNombre(nombre);
+            prov.setApellidos(apellido);
+            prov.setDireccion(direccion);
+
+            sesion.save(prov);
+
+            sesion.getTransaction().commit();
+            HibernateUtil.shutdown();
+
+        }else{
+            JOptionPane.showMessageDialog(this, "Los datos introducidos no son correcos","Error" , JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /*
+     *
+     *HAY QUE COMPROBAR QUE LOS DATOS TENGAN SENTIDO
+     *
+     */
+    public boolean checkCodeField(){
+        JTextField tfCod = this.tfGCodProv;
+        if(tfCod.getText().isBlank()){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    public boolean checkNameField(){
+        JTextField tfName = this.tfGNombre;
+        if(tfName.getText().isBlank()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public boolean checkLastNameField(){
+        JTextField tfApe = this.tfGApellidos;
+        if(tfApe.getText().isBlank()){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public boolean checkAddressField(){
+        JTextField tfDir = this.tfGDireccion;
+        if(tfDir.getText().isBlank()){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     private void initComponents() {
@@ -183,6 +254,7 @@ public class Proveedores extends JFrame {
 
                         //---- btnInsertar ----
                         btnInsertar.setText("Insertar");
+                        btnInsertar.addActionListener(e -> insertarProveedor(e));
                         panel1.add(btnInsertar);
                         btnInsertar.setBounds(new Rectangle(new Point(225, 250), btnInsertar.getPreferredSize()));
 

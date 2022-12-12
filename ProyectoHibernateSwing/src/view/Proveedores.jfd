@@ -156,6 +156,7 @@ new FormModel {
 							add( new FormComponent( "javax.swing.JButton" ) {
 								name: "btnInsertar"
 								"text": "Insertar"
+								addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "insertarProveedor", true ) )
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 								"x": 225
 								"y": 250

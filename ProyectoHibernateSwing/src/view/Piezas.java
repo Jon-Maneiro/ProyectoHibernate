@@ -4,6 +4,10 @@
 
 package view;
 
+import util.HibernateUtil;
+import com.company.PiezasEntity;
+import org.hibernate.Session;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -40,6 +44,82 @@ public class Piezas extends JFrame {
         tfDes.setText("");
     }
 
+    private void insertarPieza(ActionEvent e) {
+        if(checkCodeField() && checkNameField() && checkPrizeField() && checkDescriptionField()){
+            String codigo = tfGCodPiez.getText();
+            String nombre = tfGNombre.getText();
+            String precio = tfGPrecio.getText();
+            String desc = tfGDescripcion.getText();
+
+            //Empezamos la insercion
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+
+            PiezasEntity piez = new PiezasEntity();
+            piez.setCodigo(codigo);
+            piez.setNombre(nombre);
+            piez.setPrecio(Double.parseDouble(precio));
+            piez.setDescripcion(desc);
+
+            sesion.save(piez);
+
+            sesion.getTransaction().commit();
+            HibernateUtil.shutdown();
+
+        }else{
+            JOptionPane.showMessageDialog(this, "Los datos introducidos no son correcos","Error" , JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    /*
+    *
+    *
+    *
+    * HAY QUE COMPROBAR QUE LOS DATOS TENGAN SENTIDO
+    *
+    *
+    * */
+
+    private boolean checkCodeField(){
+        JTextField tfCod = this.tfGCodPiez;
+        if(tfCod.getText().isBlank()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    private boolean checkNameField(){
+        JTextField tfNom = this.tfGNombre;
+        if(tfNom.getText().isBlank()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    private boolean checkPrizeField(){
+        JTextField tfPre = this.tfGPrecio;
+        if(tfPre.getText().isBlank()){
+            return false;
+        }else{
+            if(util.funcionesComunes.isDouble(tfPre.getText())){
+                return true;
+            }else {
+                JOptionPane.showMessageDialog(this, "El dato introducido en \"Precio\" no es correcto","Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        }
+    }
+
+    private boolean checkDescriptionField(){
+        JTextField tfDes = this.tfGDescripcion;
+        if(tfDes.getText().isBlank()){
+            return false;
+        }else{
+            return true;
+        }
+
+    }
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         tabbedPane1 = new JTabbedPane();
@@ -161,6 +241,7 @@ public class Piezas extends JFrame {
 
                 //---- btnInsertar ----
                 btnInsertar.setText("Insertar");
+                btnInsertar.addActionListener(e -> insertarPieza(e));
                 panel3.add(btnInsertar);
                 btnInsertar.setBounds(220, 250, 78, 30);
 

@@ -4,6 +4,10 @@
 
 package view;
 
+import util.HibernateUtil;
+import com.company.ProyectosEntity;
+import org.hibernate.Session;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -38,6 +42,68 @@ public class Proyectos extends JFrame {
         tfNom.setText("");
         tfCiu.setText("");
     }
+
+    private void insertarProyecto(ActionEvent e) {
+        if(checkCodeField() && checkNameField() && checkCityField()){
+            String codigo = tfGCodProy.getText();
+            String nombre = tfGNombre.getText();
+            String ciudad = tfGCiudad.getText();
+
+            //Empezamos la insercion
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+
+            ProyectosEntity proy = new ProyectosEntity();
+            proy.setCodigo(codigo);
+            proy.setNombre(nombre);
+            proy.setCiudad(ciudad);
+
+            sesion.save(proy);
+
+            sesion.getTransaction().commit();
+            HibernateUtil.shutdown();
+
+        }else{
+            JOptionPane.showMessageDialog(this, "Los datos introducidos no son correcos","Error" , JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /*
+    *
+    *
+    *
+    * HAY QUE HACER COMPROBACION DE QUE LOS DATOS ESTAN BIEN INTRODUCIDOS
+    *
+    *
+    *
+    * */
+    private boolean checkCodeField(){
+        JTextField tfCod = this.tfGCodProy;
+        if(tfCod.getText().isBlank()){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    private boolean checkNameField(){
+        JTextField tfNom = this.tfGNombre;
+        if(tfNom.getText().isBlank()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    private boolean checkCityField(){
+        JTextField tfCiu = this.tfGCiudad;
+        if(tfCiu.getText().isBlank()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
@@ -171,6 +237,7 @@ public class Proyectos extends JFrame {
 
                         //---- btnInsertar ----
                         btnInsertar.setText("Insertar");
+                        btnInsertar.addActionListener(e -> insertarProyecto(e));
                         panel1.add(btnInsertar);
                         btnInsertar.setBounds(new Rectangle(new Point(225, 250), btnInsertar.getPreferredSize()));
 

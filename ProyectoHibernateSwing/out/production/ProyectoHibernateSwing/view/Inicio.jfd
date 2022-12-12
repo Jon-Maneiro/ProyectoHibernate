@@ -6,6 +6,21 @@ new FormModel {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 			name: "this"
 			"defaultCloseOperation": 3
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"icon": new com.jformdesigner.model.SwingIcon( 1, "C:\\Users\\9FDAM08\\Desktop\\ProyectoHibernate\\ProyectoHibernate\\Recursos\\Logo.png" )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 85
+				"y": 25
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button1"
+				"text": "text"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "button1", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 500
+				"y": 305
+			} )
 			menuBar: new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
 				name: "menuBar1"
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
@@ -15,73 +30,43 @@ new FormModel {
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
 					name: "meProveedores"
 					"text": "Proveedores"
-					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
-						name: "memeGestProv"
-						"text": "Gestion Proveedores"
-						add( new FormComponent( "javax.swing.JMenuItem" ) {
-							name: "miGPInsert"
-							"text": "Insertar"
-						} )
-						add( new FormComponent( "javax.swing.JMenuItem" ) {
-							name: "miGPModif"
-							"text": "Modificar"
-						} )
-						add( new FormComponent( "javax.swing.JMenuItem" ) {
-							name: "miGPDelete"
-							"text": "Borrar"
-						} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "miGestProv"
+						"text": "Gestionar Proveedores"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "abrirGestionProveedores", true ) )
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "miConsProv"
 						"text": "Consultar Proveedores"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "abrirConsultarProveedores", true ) )
 					} )
 				} )
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
 					name: "mePiezas"
 					"text": "Piezas"
-					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
-						name: "memeGestPiez"
-						"text": "Gestion Piezas"
-						add( new FormComponent( "javax.swing.JMenuItem" ) {
-							name: "miGPiInsert"
-							"text": "Insertar"
-						} )
-						add( new FormComponent( "javax.swing.JMenuItem" ) {
-							name: "miGPiModif"
-							"text": "Modificar"
-						} )
-						add( new FormComponent( "javax.swing.JMenuItem" ) {
-							name: "miGPiDelete"
-							"text": "Borrar"
-						} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "miGestPiez"
+						"text": "Gestionar Piezas"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "abrirGestionarPiezas", true ) )
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "miConsPiez"
 						"text": "Consultar Piezas"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "abrirConsultarPiezas", true ) )
 					} )
 				} )
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
 					name: "meProyectos"
 					"text": "Proyectos"
-					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
-						name: "memeGestProy"
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "miGestProy"
 						"text": "Gestionar Proyectos"
-						add( new FormComponent( "javax.swing.JMenuItem" ) {
-							name: "miGPrInsert"
-							"text": "Insertar"
-						} )
-						add( new FormComponent( "javax.swing.JMenuItem" ) {
-							name: "miGPrModif"
-							"text": "Modificar"
-						} )
-						add( new FormComponent( "javax.swing.JMenuItem" ) {
-							name: "miGPrDelete"
-							"text": "Borrar"
-						} )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "abrirGestionProyectos", true ) )
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "miConsProy"
 						"text": "Consultar Proyectos"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "abrirConsultarProyectos", true ) )
 					} )
 				} )
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
