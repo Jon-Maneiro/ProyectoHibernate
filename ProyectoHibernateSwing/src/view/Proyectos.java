@@ -4,12 +4,14 @@
 
 package view;
 
+import org.hibernate.query.Query;
 import util.HibernateUtil;
 import com.company.ProyectosEntity;
 import org.hibernate.Session;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -68,6 +70,61 @@ public class Proyectos extends JFrame {
         }
     }
 
+    private void buscarProyectos(ActionEvent e) {
+        JTextArea ta = this.tatextoConsulta;
+        //Se vacia el textArea para no liar datos
+        ta.setText("");
+        //Se comprueba que los campos tengan datos, y si esos datos cumplen las restricciones
+        String codigo = "";
+        String nombre = "";
+        String ciudad = "";
+
+        String hql = "select new list(codigo,nombre,ciudad) from ProyectosEntity";
+        if(hasDataCodeCField()){
+            if(tfCCodigo.getText().length() > 6){
+                JOptionPane.showMessageDialog(this, "El Codigo no puede tener mas de 6 caracteres","Error" , JOptionPane.ERROR_MESSAGE);
+            }else{
+                codigo = tfCCodigo.getText();
+            }
+        }
+        if(hasDataNameCField()){
+            if(tfCNombre.getText().length() > 40){
+                JOptionPane.showMessageDialog(this, "El Nombre no puede tener mas de 40 caracteres","Error" , JOptionPane.ERROR_MESSAGE);
+            }else{
+                nombre = tfGNombre.getText();
+            }
+        }
+        if(hasDataCityCField()){
+            if(tfCCiudad.getText().length() > 40){
+                JOptionPane.showMessageDialog(this, "La Ciudad no puede tener mas de 40 caracteres","Error" , JOptionPane.ERROR_MESSAGE);
+            }else{
+                ciudad = tfCCiudad.getText();
+            }
+        }
+
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+
+        if(!codigo.isBlank() || !nombre.isBlank() || !ciudad.isBlank()){
+            hql = hql + " where ";
+            if(!codigo.isBlank()){
+                hql = hql + "codigo = '"+codigo+"' ";
+            }
+            if(!nombre.isBlank()){
+                hql = hql + "nombre like '%"+nombre+"%' ";
+            }
+            if(!ciudad.isBlank()){
+                hql = hql + "ciudad like '%"+ciudad+"%' ";
+            }
+        }
+
+        Query query = sesion.createQuery(hql);
+        List<ProyectosEntity> resultado = query.list();
+
+        for(ProyectosEntity p: resultado){
+            ta.append(""+p.getCodigo()+" "+p.getNombre()+" "+p.getCiudad()+"\n");
+        }
+
+    }
     /*
     *
     *
@@ -77,6 +134,33 @@ public class Proyectos extends JFrame {
     *
     *
     * */
+    private boolean hasDataCodeCField(){
+        JTextField tfCod = this.tfCCodigo;
+        if(tfCod.getText().isBlank()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    private boolean hasDataNameCField(){
+        JTextField tfName = this.tfCNombre;
+        if(tfName.getText().isBlank()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    private boolean hasDataCityCField(){
+        JTextField tfCity = this.tfCCiudad;
+        if(tfCity.getText().isBlank()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     private boolean checkCodeField(){
         JTextField tfCod = this.tfGCodProy;
         if(tfCod.getText().isBlank()){
@@ -105,6 +189,8 @@ public class Proyectos extends JFrame {
     }
 
 
+
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
@@ -112,6 +198,7 @@ public class Proyectos extends JFrame {
         tabbedPane1 = new JTabbedPane();
         panel2 = new JPanel();
         scrollPane1 = new JScrollPane();
+        tatextoConsulta = new JTextArea();
         label5 = new JLabel();
         label6 = new JLabel();
         label7 = new JLabel();
@@ -152,6 +239,11 @@ public class Proyectos extends JFrame {
                     //======== panel2 ========
                     {
                         panel2.setLayout(null);
+
+                        //======== scrollPane1 ========
+                        {
+                            scrollPane1.setViewportView(tatextoConsulta);
+                        }
                         panel2.add(scrollPane1);
                         scrollPane1.setBounds(5, 5, 600, 190);
 
@@ -178,6 +270,7 @@ public class Proyectos extends JFrame {
 
                         //---- btnFiltrar ----
                         btnFiltrar.setText("Filtrar");
+                        btnFiltrar.addActionListener(e -> buscarProyectos(e));
                         panel2.add(btnFiltrar);
                         btnFiltrar.setBounds(new Rectangle(new Point(10, 325), btnFiltrar.getPreferredSize()));
 
@@ -338,6 +431,7 @@ public class Proyectos extends JFrame {
     private JTabbedPane tabbedPane1;
     private JPanel panel2;
     private JScrollPane scrollPane1;
+    private JTextArea tatextoConsulta;
     private JLabel label5;
     private JLabel label6;
     private JLabel label7;

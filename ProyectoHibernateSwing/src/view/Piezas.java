@@ -4,18 +4,23 @@
 
 package view;
 
+import com.company.ProveedoresEntity;
+import org.hibernate.query.Query;
 import util.HibernateUtil;
 import com.company.PiezasEntity;
 import org.hibernate.Session;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 import javax.swing.*;
 
 /**
  * @author Jon Maneiro García
  */
 public class Piezas extends JFrame {
+
+    private static List<PiezasEntity> listaPiezas;
     public Piezas() {
         initComponents();
     }
@@ -70,6 +75,54 @@ public class Piezas extends JFrame {
             JOptionPane.showMessageDialog(this, "Los datos introducidos no son correcos","Error" , JOptionPane.ERROR_MESSAGE);
         }
     }
+    private void buscarPiezas(ActionEvent e) {
+        JTextArea ta = this.taTextoConsulta;
+        //Se vacia el textArea para no liar datos
+        ta.setText("");
+        //Primero hay que mirar que campos tienen datos, y si esos datos son correctos
+        String codigo = "";
+        String nombre = "";
+
+        String hql = "select new list(codigo, nombre,precio,descripcion) from PiezasEntity";
+        if(hasDataCodeCField()){
+            if(tfCCodigo.getText().length() > 6){
+                JOptionPane.showMessageDialog(this, "El Codigo no puede tener mas de 6 caracteres","Error" , JOptionPane.ERROR_MESSAGE);
+            }else{
+                codigo = tfCCodigo.getText();
+            }
+        }
+
+        if(hasDataNameCField()){
+            if(tfCNombre.getText().length() > 20){
+                JOptionPane.showMessageDialog(this, "El Nombre no puede tener mas de 20 caracteres","Error" , JOptionPane.ERROR_MESSAGE);
+            }else{
+                nombre = tfCNombre.getText();
+            }
+        }
+
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+
+        if(!codigo.isBlank() || !nombre.isBlank()){
+
+            hql = hql + " where ";
+
+            if(!codigo.isBlank()){
+                hql = hql + "codigo = '"+codigo+"' ";
+            }
+            if(!nombre.isBlank()){
+                hql = hql + "nombre like '%"+nombre+"%' ";
+            }
+
+        }
+
+        Query query = sesion.createQuery(hql);
+        List<PiezasEntity> resultado = query.list();
+        listaPiezas = resultado;
+
+        for(PiezasEntity p: resultado){
+            ta.append(""+p.getCodigo()+" "+p.getNombre()+" "+p.getPrecio()+" "+p.getDescripcion()+"\n");
+        }
+    }
     /*
     *
     *
@@ -79,6 +132,23 @@ public class Piezas extends JFrame {
     *
     * */
 
+    private boolean hasDataCodeCField(){
+        JTextField tfCod = this.tfCCodigo;
+        if(tfCod.getText().isBlank()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    private boolean hasDataNameCField(){
+        JTextField tfName = this.tfCNombre;
+        if(tfName.getText().isBlank()){
+            return false;
+        }else{
+            return true;
+        }
+    }
     private boolean checkCodeField(){
         JTextField tfCod = this.tfGCodPiez;
         if(tfCod.getText().isBlank()){
@@ -120,17 +190,21 @@ public class Piezas extends JFrame {
         }
 
     }
+
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         tabbedPane1 = new JTabbedPane();
         panel2 = new JPanel();
         scrollPane1 = new JScrollPane();
+        taTextoConsulta = new JTextArea();
         tfCNombre = new JTextField();
         label6 = new JLabel();
         label5 = new JLabel();
         tfCCodigo = new JTextField();
         btnFiltrar = new JButton();
         btnVolver = new JButton();
+        btnBorrarC = new JButton();
         panel3 = new JPanel();
         tfGDescripcion = new JTextField();
         label4 = new JLabel();
@@ -156,6 +230,11 @@ public class Piezas extends JFrame {
             //======== panel2 ========
             {
                 panel2.setLayout(null);
+
+                //======== scrollPane1 ========
+                {
+                    scrollPane1.setViewportView(taTextoConsulta);
+                }
                 panel2.add(scrollPane1);
                 scrollPane1.setBounds(0, 5, 600, 190);
                 panel2.add(tfCNombre);
@@ -175,6 +254,7 @@ public class Piezas extends JFrame {
 
                 //---- btnFiltrar ----
                 btnFiltrar.setText("Filtrar");
+                btnFiltrar.addActionListener(e -> buscarPiezas(e));
                 panel2.add(btnFiltrar);
                 btnFiltrar.setBounds(0, 280, 78, 30);
 
@@ -183,6 +263,11 @@ public class Piezas extends JFrame {
                 btnVolver.addActionListener(e -> cerrarVentana(e));
                 panel2.add(btnVolver);
                 btnVolver.setBounds(new Rectangle(new Point(520, 320), btnVolver.getPreferredSize()));
+
+                //---- btnBorrarC ----
+                btnBorrarC.setText("Borrar Todo");
+                panel2.add(btnBorrarC);
+                btnBorrarC.setBounds(new Rectangle(new Point(255, 320), btnBorrarC.getPreferredSize()));
 
                 {
                     // compute preferred size
@@ -304,12 +389,14 @@ public class Piezas extends JFrame {
     private JTabbedPane tabbedPane1;
     private JPanel panel2;
     private JScrollPane scrollPane1;
+    private JTextArea taTextoConsulta;
     private JTextField tfCNombre;
     private JLabel label6;
     private JLabel label5;
     private JTextField tfCCodigo;
     private JButton btnFiltrar;
     private JButton btnVolver;
+    private JButton btnBorrarC;
     private JPanel panel3;
     private JTextField tfGDescripcion;
     private JLabel label4;

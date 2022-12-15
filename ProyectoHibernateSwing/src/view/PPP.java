@@ -31,7 +31,7 @@ public class PPP extends JFrame {
 
     private void cargarDatosEnComboBox(){
         Session sesion = HibernateUtil.getSessionFactory().openSession();
-        String hql = "from ProveedoresEntity";
+        String hql = "from ProveedoresEntity ";
         Query query = sesion.createQuery(hql);
         List<ProveedoresEntity> proveedores = query.list();
 
