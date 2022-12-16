@@ -16,6 +16,9 @@ new FormModel {
 							name: "panel2"
 							add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 								name: "scrollPane1"
+								add( new FormComponent( "javax.swing.JTextArea" ) {
+									name: "taTextoConsulta"
+								} )
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 								"x": 5
 								"y": 5
@@ -69,6 +72,7 @@ new FormModel {
 							add( new FormComponent( "javax.swing.JButton" ) {
 								name: "btnFiltrar"
 								"text": "Filtrar"
+								addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "buscarProveedores", true ) )
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 								"x": 10
 								"y": 325
@@ -80,6 +84,14 @@ new FormModel {
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 								"x": 525
 								"y": 325
+							} )
+							add( new FormComponent( "javax.swing.JButton" ) {
+								name: "btnBorrarC"
+								"text": "Borrar Todo"
+								addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "eliminarBusquedas", true ) )
+							}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+								"x": 255
+								"y": 330
 							} )
 						}, new FormLayoutConstraints( null ) {
 							"title": "Consultar Proveedores"
@@ -156,6 +168,7 @@ new FormModel {
 							add( new FormComponent( "javax.swing.JButton" ) {
 								name: "btnInsertar"
 								"text": "Insertar"
+								addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "insertarProveedor", true ) )
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 								"x": 225
 								"y": 250
@@ -163,6 +176,7 @@ new FormModel {
 							add( new FormComponent( "javax.swing.JButton" ) {
 								name: "btnModificar"
 								"text": "Modificar"
+								addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "updateProveedor", true ) )
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 								"x": 325
 								"y": 250
@@ -170,6 +184,7 @@ new FormModel {
 							add( new FormComponent( "javax.swing.JButton" ) {
 								name: "btnEliminar"
 								"text": "Eliminar"
+								addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "deleteProveedor", true ) )
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 								"x": 425
 								"y": 250

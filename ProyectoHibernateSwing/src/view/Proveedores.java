@@ -75,7 +75,7 @@ public class Proveedores extends JFrame {
             sesion.save(prov);
 
             sesion.getTransaction().commit();
-            HibernateUtil.shutdown();
+            sesion.close();
             JOptionPane.showMessageDialog(this, "El Proveedor ha sido insertado","Insercion" , JOptionPane.INFORMATION_MESSAGE);
 
         }else{
@@ -290,18 +290,18 @@ public class Proveedores extends JFrame {
     private boolean checkLastNameField(){
         JTextField tfApe = this.tfGApellidos;
         if(tfApe.getText().isBlank()){
-            return true;
-        }else {
             return false;
+        }else {
+            return true;
         }
     }
 
     private boolean checkAddressField(){
         JTextField tfDir = this.tfGDireccion;
         if(tfDir.getText().isBlank()){
-            return true;
-        }else{
             return false;
+        }else{
+            return true;
         }
     }
 
