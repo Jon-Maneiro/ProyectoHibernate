@@ -30,6 +30,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JComboBox" ) {
 				name: "cbCodProv"
 				"toolTipText": "Elige un Codigo"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "cargarProveedor", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 85
 				"y": 85
@@ -63,6 +64,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JComboBox" ) {
 				name: "cbCodPiez"
 				"toolTipText": "Elige un Codigo"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "cargarPieza", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 79
 				"height": 30
@@ -99,6 +101,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JComboBox" ) {
 				name: "cbCodProy"
 				"toolTipText": "Elige un Codigo"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "cargarProyecto", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 79
 				"height": 30
@@ -140,6 +143,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "btnInsertar"
 				"text": "Insertar"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "insertarRelacion", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 10
 				"y": 20
@@ -147,6 +151,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "btnModificar"
 				"text": "Modificar"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "modificarRelacion", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 78
 				"height": 30
@@ -156,6 +161,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "btnBorrar"
 				"text": "Borrar"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "eliminarRelacion", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 78
 				"height": 30

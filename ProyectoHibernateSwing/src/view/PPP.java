@@ -4,9 +4,8 @@
 
 package view;
 
-import com.company.PiezasEntity;
-import com.company.ProveedoresEntity;
-import com.company.ProyectosEntity;
+import com.company.*;
+import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import util.HibernateUtil;
@@ -64,7 +63,12 @@ public class PPP extends JFrame {
         if(x.getText().isBlank()){
             return false;
         }else{
-            return true;
+            if(util.funcionesComunes.isDouble(x.getText())) {
+                return true;
+            }else{
+                JOptionPane.showMessageDialog(this, "La cantidad debe ser un numero","Error" , JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
         }
     }
 
@@ -94,6 +98,170 @@ public class PPP extends JFrame {
             return true;
         }
     }
+
+    private void cargarProveedor(ActionEvent e) {
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        sesion.beginTransaction();
+        try{
+            ProveedoresEntity p = (ProveedoresEntity) sesion.load(ProveedoresEntity.class, cbCodProv.getSelectedItem().toString());
+            tfNomProv.setText(p.getNombre());
+            tfDirProv.setText(p.getDireccion());
+            HibernateUtil.shutdown();
+            cargarRelacion();
+        }catch(ObjectNotFoundException o){
+            JOptionPane.showMessageDialog(this, "Ha ocurrido un error y no puede recuperarse el Proveedor","Error" , JOptionPane.ERROR_MESSAGE);
+
+        }
+    }
+
+    private void cargarPieza(ActionEvent e) {
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        sesion.beginTransaction();
+        try{
+            PiezasEntity p = (PiezasEntity)sesion.load(PiezasEntity.class, cbCodPiez.getSelectedItem().toString());
+            tfNomPiez.setText(p.getNombre());
+            tfPrecioPiez.setText(p.getPrecio()+"");
+            HibernateUtil.shutdown();
+            cargarRelacion();
+        }catch(ObjectNotFoundException o){
+            JOptionPane.showMessageDialog(this, "Ha ocurrido un error y no puede recuperarse la Pieza","Error" , JOptionPane.ERROR_MESSAGE);
+
+        }
+    }
+
+    private void cargarProyecto(ActionEvent e) {
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        sesion.beginTransaction();
+        try{
+            ProyectosEntity p = (ProyectosEntity) sesion.load(ProyectosEntity.class, cbCodProy.getSelectedItem().toString());
+            tfNomProy.setText(p.getNombre());
+            tfCiuProy.setText(p.getCiudad());
+            HibernateUtil.shutdown();
+            cargarRelacion();
+        }catch(ObjectNotFoundException o){
+            JOptionPane.showMessageDialog(this, "Ha ocurrido un error y no puede recuperarse el Proyecto","Error" , JOptionPane.ERROR_MESSAGE);
+
+        }
+    }
+
+    private void insertarRelacion(ActionEvent e) {
+        if(checkCbCodProv() && checkCbCodPiez() && checkCbCodProy() && hasDataCantidad()){
+            String codProv = cbCodProv.getSelectedItem().toString();
+            String codPiez = cbCodPiez.getSelectedItem().toString();
+            String codProy = cbCodProy.getSelectedItem().toString();
+            Double cantidad = Double.parseDouble(tfCantidad.getText());
+            //Empezamos la insercion
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+
+            GestionEntity gest = new GestionEntity();
+            gest.setCodProveedor(codProv);
+            gest.setCodPieza(codPiez);
+            gest.setCodProyecto(codProy);
+            gest.setCantidad(cantidad);
+
+            sesion.save(gest);
+
+            sesion.getTransaction().commit();
+
+            HibernateUtil.shutdown();
+            JOptionPane.showMessageDialog(this, "Se ha introducido la relacion","Insercion" , JOptionPane.INFORMATION_MESSAGE);
+
+        }else{
+            JOptionPane.showMessageDialog(this, "Es necesario seleccionar todos los ID y escribir una cantidad","Error" , JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void modificarRelacion(ActionEvent e) {
+        if(checkCbCodProv() && checkCbCodPiez() && checkCbCodProy() && hasDataCantidad()){
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+            try{
+                GestionEntity gest;
+                GestionEntityPK gestPK = new GestionEntityPK();
+                gestPK.setCodProveedor(cbCodProv.getSelectedItem().toString());
+                gestPK.setCodPieza(cbCodPiez.getSelectedItem().toString());
+                gestPK.setCodProyecto(cbCodProy.getSelectedItem().toString());
+                gest = (GestionEntity) sesion.load(GestionEntity.class,gestPK);
+
+                gest.setCantidad(Double.parseDouble(tfCantidad.getText()));
+
+                sesion.update(gest);
+                sesion.getTransaction().commit();
+
+                HibernateUtil.shutdown();
+                JOptionPane.showMessageDialog(this, "Se ha modificado la relacion","Error" , JOptionPane.ERROR_MESSAGE);
+
+
+            }catch(ObjectNotFoundException o){
+                JOptionPane.showMessageDialog(this, "No puede accederse al objeto","Error" , JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Es necesario seleccionar todos los ID y escribir una cantidad","Error" , JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void cargarRelacion(){
+        if(checkCbCodProv() && checkCbCodPiez() && checkCbCodProy()){
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+
+            try{
+                GestionEntity gest;
+                GestionEntityPK gestPK = new GestionEntityPK();
+                gestPK.setCodProveedor(cbCodProv.getSelectedItem().toString());
+                gestPK.setCodPieza(cbCodPiez.getSelectedItem().toString());
+                gestPK.setCodProyecto(cbCodProy.getSelectedItem().toString());
+
+                gest = (GestionEntity) sesion.load(GestionEntity.class, gestPK);
+
+                ProveedoresEntity prov =(ProveedoresEntity) sesion.load(ProveedoresEntity.class, gest.getCodProveedor());
+                PiezasEntity pie = (PiezasEntity) sesion.load(PiezasEntity.class, gest.getCodPieza());
+                ProyectosEntity proy = (ProyectosEntity) sesion.load(ProyectosEntity.class, gest.getCodProyecto());
+
+                HibernateUtil.shutdown();
+                tfCantidad.setText(gest.getCantidad() +"");
+                tfNomProv.setText(prov.getNombre());
+                tfDirProv.setText(prov.getDireccion());
+                tfNomPiez.setText(pie.getNombre());
+                tfPrecioPiez.setText(pie.getPrecio()+"");
+                tfNomProy.setText(proy.getNombre());
+                tfCiuProy.setText(proy.getCiudad());
+
+            }catch(ObjectNotFoundException o){
+                System.out.println("Cosita de testeo");
+            }
+        }
+    }
+
+    private void eliminarRelacion(ActionEvent e) {
+        if(checkCbCodProv() && checkCbCodPiez() && checkCbCodProy()){
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+            try{
+                GestionEntity gest;
+                GestionEntityPK gestPK = new GestionEntityPK();
+                gestPK.setCodProveedor(cbCodProv.getSelectedItem().toString());
+                gestPK.setCodPieza(cbCodPiez.getSelectedItem().toString());
+                gestPK.setCodProyecto(cbCodProy.getSelectedItem().toString());
+                gest = (GestionEntity) sesion.load(GestionEntity.class,gestPK);
+
+
+                sesion.delete(gest);
+                sesion.getTransaction().commit();
+
+                HibernateUtil.shutdown();
+                JOptionPane.showMessageDialog(this, "Se ha modificado la relacion","Error" , JOptionPane.ERROR_MESSAGE);
+
+
+            }catch(ObjectNotFoundException o){
+                JOptionPane.showMessageDialog(this, "No puede accederse al objeto","Error" , JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Es necesario seleccionar todos los ID","Error" , JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
 
 
     private void initComponents() {
@@ -141,6 +309,7 @@ public class PPP extends JFrame {
 
         //---- cbCodProv ----
         cbCodProv.setToolTipText("Elige un Codigo");
+        cbCodProv.addActionListener(e -> cargarProveedor(e));
         contentPane.add(cbCodProv);
         cbCodProv.setBounds(new Rectangle(new Point(85, 85), cbCodProv.getPreferredSize()));
 
@@ -161,6 +330,7 @@ public class PPP extends JFrame {
 
         //---- cbCodPiez ----
         cbCodPiez.setToolTipText("Elige un Codigo");
+        cbCodPiez.addActionListener(e -> cargarPieza(e));
         contentPane.add(cbCodPiez);
         cbCodPiez.setBounds(85, 155, 79, 30);
 
@@ -181,6 +351,7 @@ public class PPP extends JFrame {
 
         //---- cbCodProy ----
         cbCodProy.setToolTipText("Elige un Codigo");
+        cbCodProy.addActionListener(e -> cargarProyecto(e));
         contentPane.add(cbCodProy);
         cbCodProy.setBounds(85, 225, 79, 30);
 
@@ -203,16 +374,19 @@ public class PPP extends JFrame {
 
         //---- btnInsertar ----
         btnInsertar.setText("Insertar");
+        btnInsertar.addActionListener(e -> insertarRelacion(e));
         contentPane.add(btnInsertar);
         btnInsertar.setBounds(new Rectangle(new Point(10, 20), btnInsertar.getPreferredSize()));
 
         //---- btnModificar ----
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(e -> modificarRelacion(e));
         contentPane.add(btnModificar);
         btnModificar.setBounds(95, 20, 78, 30);
 
         //---- btnBorrar ----
         btnBorrar.setText("Borrar");
+        btnBorrar.addActionListener(e -> eliminarRelacion(e));
         contentPane.add(btnBorrar);
         btnBorrar.setBounds(180, 20, 78, 30);
 
