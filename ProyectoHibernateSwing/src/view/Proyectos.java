@@ -4,6 +4,9 @@
 
 package view;
 
+import com.company.PiezasEntity;
+import org.hibernate.ObjectNotFoundException;
+import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 import util.HibernateUtil;
 import com.company.ProyectosEntity;
@@ -19,6 +22,8 @@ import javax.swing.border.*;
  * @author Jon Maneiro García
  */
 public class Proyectos extends JFrame {
+
+    private static List<ProyectosEntity> listaProyectos;
     public Proyectos() {
         initComponents();
     }
@@ -47,6 +52,7 @@ public class Proyectos extends JFrame {
 
     private void insertarProyecto(ActionEvent e) {
         if(checkCodeField() && checkNameField() && checkCityField()){
+            turnCodeGUpp();
             String codigo = tfGCodProy.getText();
             String nombre = tfGNombre.getText();
             String ciudad = tfGCiudad.getText();
@@ -64,9 +70,86 @@ public class Proyectos extends JFrame {
 
             sesion.getTransaction().commit();
             HibernateUtil.shutdown();
+            JOptionPane.showMessageDialog(this, "El Proyecto ha sido insertado","Insercion" , JOptionPane.INFORMATION_MESSAGE);
 
         }else{
-            JOptionPane.showMessageDialog(this, "Los datos introducidos no son correcos","Error" , JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Los datos introducidos no son correctos","Error" , JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
+    private void updateProyecto(ActionEvent e) {
+        if(checkCodeField() && (checkNameField() || checkCityField())){
+           turnCodeGUpp();
+           Session sesion = HibernateUtil.getSessionFactory().openSession();
+           sesion.beginTransaction();
+           try{
+               ProyectosEntity po = (ProyectosEntity) sesion.load(ProyectosEntity.class , tfGCodProy.getText());
+
+               if(checkNameField()){
+                   po.setNombre(tfGNombre.getText());
+               }
+               if(checkCityField()){
+                   po.setNombre(tfGNombre.getText());
+               }
+
+               sesion.update(po);
+               sesion.getTransaction().commit();
+
+               HibernateUtil.shutdown();
+               JOptionPane.showMessageDialog(this, "El Proyecto ha sido actualizado","Actualizacion" , JOptionPane.INFORMATION_MESSAGE);
+
+           }catch(ObjectNotFoundException x){
+               JOptionPane.showMessageDialog(this, "Ese proyecto no existe en la base de datos","Error" , JOptionPane.ERROR_MESSAGE);
+           }
+
+        }else{
+            JOptionPane.showMessageDialog(this, "Para poder modificar un Proyecto, se necesita el codigo y otro de los campos como minimo","Error" , JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void deleteProyecto(ActionEvent e) {
+        if(checkCodeField()){
+            turnCodeGUpp();
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+            try{
+                ProyectosEntity po = (ProyectosEntity) sesion.load(ProyectosEntity.class, tfGCodProy.getText());
+
+                sesion.delete(po);
+                sesion.getTransaction().commit();
+
+                HibernateUtil.shutdown();
+                JOptionPane.showMessageDialog(this, "El Proyecto ha sido eliminado","Eliminacion" , JOptionPane.INFORMATION_MESSAGE);
+            }catch(ObjectNotFoundException o){
+                JOptionPane.showMessageDialog(this, "Ese Proyecto no existe en la BBDD","Error" , JOptionPane.ERROR_MESSAGE);
+            }catch(ConstraintViolationException c){
+                JOptionPane.showMessageDialog(this, "El Proyecto que deseas eliminar tiene relaciones, elimina primero esas relaciones","Error" , JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Para poder eliminar un objeto hace falta su codigo)","Error" , JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void eliminarBusquedas(ActionEvent e) {
+        int reply = JOptionPane.showConfirmDialog(null, "¿Vas a proceder con la eliminacion de todos los objetos de la busqueda?\n Los objetos que tengan relaciones no se borrarán", "ELIMINACION MASIVA", JOptionPane.YES_NO_OPTION);
+        int contador = 0;
+        if (reply == JOptionPane.YES_OPTION) {
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+            for(ProyectosEntity p: listaProyectos){
+                try{
+                    sesion.delete(p);
+                }catch(ConstraintViolationException c){
+                    contador++;
+                }
+            }
+
+            sesion.getTransaction().commit();//Esto podría ponerse dentro del bucle si da algun tipo de error
+            HibernateUtil.shutdown();
+            JOptionPane.showMessageDialog(null, "Eliminacion Completada.\n Han quedado "+contador+" proyectos sin eliminar de la consulta");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha borrado nada");
         }
     }
 
@@ -81,6 +164,7 @@ public class Proyectos extends JFrame {
 
         String hql = "select new list(codigo,nombre,ciudad) from ProyectosEntity";
         if(hasDataCodeCField()){
+            turnCodeCUpp();
             if(tfCCodigo.getText().length() > 6){
                 JOptionPane.showMessageDialog(this, "El Codigo no puede tener mas de 6 caracteres","Error" , JOptionPane.ERROR_MESSAGE);
             }else{
@@ -125,6 +209,10 @@ public class Proyectos extends JFrame {
         }
 
     }
+
+
+
+
     /*
     *
     *
@@ -161,6 +249,13 @@ public class Proyectos extends JFrame {
         }
     }
 
+    private void turnCodeGUpp(){
+        tfGCodProy.setText(tfGCodProy.getText().toUpperCase());
+    }
+    private void turnCodeCUpp(){
+        tfCCodigo.setText(tfCCodigo.getText().toUpperCase());
+    }
+
     private boolean checkCodeField(){
         JTextField tfCod = this.tfGCodProy;
         if(tfCod.getText().isBlank()){
@@ -191,6 +286,11 @@ public class Proyectos extends JFrame {
 
 
 
+
+
+
+
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
@@ -207,6 +307,7 @@ public class Proyectos extends JFrame {
         tfCCiudad = new JTextField();
         btnFiltrar = new JButton();
         btnVolver2 = new JButton();
+        btnBorrarC = new JButton();
         panel1 = new JPanel();
         label1 = new JLabel();
         label2 = new JLabel();
@@ -280,6 +381,12 @@ public class Proyectos extends JFrame {
                         panel2.add(btnVolver2);
                         btnVolver2.setBounds(new Rectangle(new Point(525, 325), btnVolver2.getPreferredSize()));
 
+                        //---- btnBorrarC ----
+                        btnBorrarC.setText("Borrar Todo");
+                        btnBorrarC.addActionListener(e -> eliminarBusquedas(e));
+                        panel2.add(btnBorrarC);
+                        btnBorrarC.setBounds(new Rectangle(new Point(255, 330), btnBorrarC.getPreferredSize()));
+
                         {
                             // compute preferred size
                             Dimension preferredSize = new Dimension();
@@ -336,11 +443,13 @@ public class Proyectos extends JFrame {
 
                         //---- btnModificar ----
                         btnModificar.setText("Modificar");
+                        btnModificar.addActionListener(e -> updateProyecto(e));
                         panel1.add(btnModificar);
                         btnModificar.setBounds(new Rectangle(new Point(325, 250), btnModificar.getPreferredSize()));
 
                         //---- btnEliminar ----
                         btnEliminar.setText("Eliminar");
+                        btnEliminar.addActionListener(e -> deleteProyecto(e));
                         panel1.add(btnEliminar);
                         btnEliminar.setBounds(new Rectangle(new Point(425, 250), btnEliminar.getPreferredSize()));
 
@@ -440,6 +549,7 @@ public class Proyectos extends JFrame {
     private JTextField tfCCiudad;
     private JButton btnFiltrar;
     private JButton btnVolver2;
+    private JButton btnBorrarC;
     private JPanel panel1;
     private JLabel label1;
     private JLabel label2;

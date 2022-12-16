@@ -56,10 +56,45 @@ public class PPP extends JFrame {
         for(ProyectosEntity p:proyectos){
             cbProy.addItem(p.getCodigo());
         }
-
-
         HibernateUtil.shutdown();
     }
+
+    private boolean hasDataCantidad(){
+        JTextField x = tfCantidad;
+        if(x.getText().isBlank()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    private boolean checkCbCodProv(){
+        JComboBox c = cbCodProv;
+        if(c.getSelectedIndex() == 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    private boolean checkCbCodPiez(){
+        JComboBox c = cbCodPiez;
+        if(c.getSelectedIndex() == 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    private boolean checkCbCodProy(){
+        JComboBox c = cbCodProy;
+        if(c.getSelectedIndex() == 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off

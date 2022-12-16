@@ -5,6 +5,8 @@
 package view;
 
 import com.company.ProveedoresEntity;
+import org.hibernate.ObjectNotFoundException;
+import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 import util.HibernateUtil;
 import com.company.PiezasEntity;
@@ -51,6 +53,7 @@ public class Piezas extends JFrame {
 
     private void insertarPieza(ActionEvent e) {
         if(checkCodeField() && checkNameField() && checkPrizeField() && checkDescriptionField()){
+            turnCodeGUpp();
             String codigo = tfGCodPiez.getText();
             String nombre = tfGNombre.getText();
             String precio = tfGPrecio.getText();
@@ -70,9 +73,92 @@ public class Piezas extends JFrame {
 
             sesion.getTransaction().commit();
             HibernateUtil.shutdown();
+            JOptionPane.showMessageDialog(this, "La pieza ha sido insertada","Insercion" , JOptionPane.INFORMATION_MESSAGE);
 
         }else{
-            JOptionPane.showMessageDialog(this, "Los datos introducidos no son correcos","Error" , JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Los datos introducidos no son correctos","Error" , JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void updatePieza(ActionEvent e) {
+        if(checkCodeField()&&(checkNameField() || checkPrizeField() || checkDescriptionField())){
+            turnCodeGUpp();
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+            try {
+                PiezasEntity pe = (PiezasEntity) sesion.load(PiezasEntity.class, tfGCodPiez.getText());
+
+                if(checkNameField()){
+                    pe.setNombre(tfGNombre.getText());
+                }
+                if(checkPrizeField()){
+                    pe.setPrecio(Double.parseDouble(tfGPrecio.getText()));
+                }
+                if(checkDescriptionField()){
+                    pe.setDescripcion(tfGDescripcion.getText());
+                }
+
+                sesion.update(pe);
+                sesion.getTransaction().commit();
+
+                HibernateUtil.shutdown();
+                JOptionPane.showMessageDialog(this, "La pieza ha sido actualizada","Actualizacion" , JOptionPane.INFORMATION_MESSAGE);
+
+            }catch(ObjectNotFoundException o){
+                JOptionPane.showMessageDialog(this, "Esa pieza no existe en la BBDD","Error" , JOptionPane.ERROR_MESSAGE);
+            }catch(NumberFormatException n){
+                JOptionPane.showMessageDialog(this, "El campo Precio debe ser numerico","Error" , JOptionPane.ERROR_MESSAGE);
+
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Para poder modificar un objeto, se necesita el codigo y minimo otro campo a editar","Error" , JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void eliminarPieza(ActionEvent e) {
+        if(checkCodeField()){
+            turnCodeGUpp();
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+            try{
+                PiezasEntity pe = (PiezasEntity) sesion.load(PiezasEntity.class , tfGCodPiez.getText());
+
+                sesion.delete(pe);
+                sesion.getTransaction().commit();
+
+                HibernateUtil.shutdown();
+                JOptionPane.showMessageDialog(this, "La pieza ha sido eliminada","Eliminacion" , JOptionPane.INFORMATION_MESSAGE);
+
+            }catch(ObjectNotFoundException o){
+                JOptionPane.showMessageDialog(this, "Esa pieza no existe en la BBDD","Error" , JOptionPane.ERROR_MESSAGE);
+            }catch(ConstraintViolationException c){
+                JOptionPane.showMessageDialog(this, "La pieza que deseas eliminar tiene relaciones, elimina primero esas relaciones","Error" , JOptionPane.ERROR_MESSAGE);
+            }
+
+        }else{
+            JOptionPane.showMessageDialog(this, "Para poder eliminar un objeto hace falta su codigo)","Error" , JOptionPane.ERROR_MESSAGE);
+
+        }
+    }
+    private void eliminarBusquedas(ActionEvent e) {
+        int reply = JOptionPane.showConfirmDialog(null, "¿Vas a proceder con la eliminacion de todos los objetos de la busqueda?\n Los objetos que tengan relaciones no se borrarán", "ELIMINACION MASIVA", JOptionPane.YES_NO_OPTION);
+        int contador = 0;
+        if (reply == JOptionPane.YES_OPTION) {
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+            for(PiezasEntity p: listaPiezas){
+                try{
+                    sesion.delete(p);
+                }catch(ConstraintViolationException c){
+                    contador++;
+                }
+            }
+
+            sesion.getTransaction().commit();//Esto podría ponerse dentro del bucle si da algun tipo de error
+            HibernateUtil.shutdown();
+            JOptionPane.showMessageDialog(null, "Eliminacion Completada.\n Han quedado "+contador+" piezas sin eliminar de la consulta");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha borrado nada");
         }
     }
     private void buscarPiezas(ActionEvent e) {
@@ -85,6 +171,7 @@ public class Piezas extends JFrame {
 
         String hql = "select new list(codigo, nombre,precio,descripcion) from PiezasEntity";
         if(hasDataCodeCField()){
+            turnCodeCUpp();
             if(tfCCodigo.getText().length() > 6){
                 JOptionPane.showMessageDialog(this, "El Codigo no puede tener mas de 6 caracteres","Error" , JOptionPane.ERROR_MESSAGE);
             }else{
@@ -149,6 +236,14 @@ public class Piezas extends JFrame {
             return true;
         }
     }
+
+    private void turnCodeGUpp(){
+        tfGCodPiez.setText(tfGCodPiez.getText().toUpperCase());
+    }
+    private void turnCodeCUpp(){
+        tfCCodigo.setText(tfCCodigo.getText().toUpperCase());
+    }
+
     private boolean checkCodeField(){
         JTextField tfCod = this.tfGCodPiez;
         if(tfCod.getText().isBlank()){
@@ -190,6 +285,12 @@ public class Piezas extends JFrame {
         }
 
     }
+
+
+
+
+
+
 
 
     private void initComponents() {
@@ -266,6 +367,7 @@ public class Piezas extends JFrame {
 
                 //---- btnBorrarC ----
                 btnBorrarC.setText("Borrar Todo");
+                btnBorrarC.addActionListener(e -> eliminarBusquedas(e));
                 panel2.add(btnBorrarC);
                 btnBorrarC.setBounds(new Rectangle(new Point(255, 320), btnBorrarC.getPreferredSize()));
 
@@ -332,11 +434,13 @@ public class Piezas extends JFrame {
 
                 //---- btnModificar ----
                 btnModificar.setText("Modificar");
+                btnModificar.addActionListener(e -> updatePieza(e));
                 panel3.add(btnModificar);
                 btnModificar.setBounds(320, 250, 85, 30);
 
                 //---- btnEliminar ----
                 btnEliminar.setText("Eliminar");
+                btnEliminar.addActionListener(e -> eliminarPieza(e));
                 panel3.add(btnEliminar);
                 btnEliminar.setBounds(420, 250, 78, 30);
 

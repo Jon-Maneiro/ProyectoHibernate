@@ -68,7 +68,7 @@ public class Informacion extends JFrame {
                 contentPanel.add(label2, "cell 0 1");
 
                 //---- textField2 ----
-                textField2.setText("0.0.1");
+                textField2.setText("0.0.4");
                 contentPanel.add(textField2, "cell 1 1");
             }
             dialogPane.add(contentPanel, BorderLayout.CENTER);

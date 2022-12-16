@@ -4,6 +4,10 @@
 
 package view;
 
+import com.company.PiezasEntity;
+import com.company.ProyectosEntity;
+import org.hibernate.ObjectNotFoundException;
+import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 import util.HibernateUtil;
 import com.company.ProveedoresEntity;
@@ -19,6 +23,9 @@ import javax.swing.border.*;
  * @author Jon Maneiro García
  */
 public class Proveedores extends JFrame {
+
+    private static List<ProveedoresEntity> listaProveedores;
+
     public Proveedores() {
         initComponents();
     }
@@ -50,6 +57,7 @@ public class Proveedores extends JFrame {
 
     private void insertarProveedor(ActionEvent e) {
         if(checkCodeField() && checkNameField() && checkLastNameField() && checkAddressField()){
+            turnCodeGUpp();
             String codigo = tfGCodProv.getText();
             String nombre = tfGNombre.getText();
             String apellido = tfGApellidos.getText();
@@ -68,11 +76,93 @@ public class Proveedores extends JFrame {
 
             sesion.getTransaction().commit();
             HibernateUtil.shutdown();
+            JOptionPane.showMessageDialog(this, "El Proveedor ha sido insertado","Insercion" , JOptionPane.INFORMATION_MESSAGE);
 
         }else{
             JOptionPane.showMessageDialog(this, "Los datos introducidos no son correctos","Error" , JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    private void updateProveedor(ActionEvent e) {
+        if(checkCodeField() && (checkNameField() || checkLastNameField() || checkAddressField())){
+            turnCodeGUpp();
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+            try{
+                ProveedoresEntity pr = (ProveedoresEntity) sesion.load(ProveedoresEntity.class, tfGCodProv.getText());
+
+                if(checkNameField()){
+                    pr.setNombre(tfGNombre.getText());
+                }
+                if(checkLastNameField()){
+                    pr.setApellidos(tfGApellidos.getText());
+                }
+                if(checkAddressField()){
+                    pr.setDireccion(tfGDireccion.getText());
+                }
+
+                sesion.update(pr);
+                sesion.getTransaction().commit();
+
+                HibernateUtil.shutdown();
+                JOptionPane.showMessageDialog(this, "El Proveedor ha sido actualizado","Actualizacion" , JOptionPane.INFORMATION_MESSAGE);
+
+            }catch(ObjectNotFoundException o){
+                JOptionPane.showMessageDialog(this, "Ese proveedor no existe en la BBDD","Error" , JOptionPane.ERROR_MESSAGE);
+
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Para poder modificar un objeto, se necesita el codigo y minimo otro campo a editar","Error" , JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void deleteProveedor(ActionEvent e) {
+        if(checkCodeField()){
+            turnCodeGUpp();
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+            try{
+
+                ProveedoresEntity pr = (ProveedoresEntity) sesion.load(ProveedoresEntity.class,tfGCodProv.getText());
+
+                sesion.delete(pr);
+                sesion.getTransaction().commit();
+
+                HibernateUtil.shutdown();
+                JOptionPane.showMessageDialog(this, "El Proveedor ha sido eliminado","Eliminacion" , JOptionPane.INFORMATION_MESSAGE);
+            }catch(ObjectNotFoundException o){
+                JOptionPane.showMessageDialog(this, "Ese Proveedor no existe en la BBDD","Error" , JOptionPane.ERROR_MESSAGE);
+            }catch(ConstraintViolationException c){
+                JOptionPane.showMessageDialog(this, "El Proveedor que deseas eliminar tiene relaciones, elimina primero esas relaciones","Error" , JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Para poder eliminar un objeto hace falta su codigo)","Error" , JOptionPane.ERROR_MESSAGE);
+
+        }
+    }
+
+    private void eliminarBusquedas(ActionEvent e) {
+        int reply = JOptionPane.showConfirmDialog(null, "¿Vas a proceder con la eliminacion de todos los objetos de la busqueda?\n Los objetos que tengan relaciones no se borrarán", "ELIMINACION MASIVA", JOptionPane.YES_NO_OPTION);
+        int contador = 0;
+        if (reply == JOptionPane.YES_OPTION) {
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+            for(ProveedoresEntity p: listaProveedores){
+                try{
+                    sesion.delete(p);
+                }catch(ConstraintViolationException c){
+                    contador++;
+                }
+            }
+
+            sesion.getTransaction().commit();//Esto podría ponerse dentro del bucle si da algun tipo de error
+            HibernateUtil.shutdown();
+            JOptionPane.showMessageDialog(null, "Eliminacion Completada.\n Han quedado "+contador+" proveedores sin eliminar de la consulta");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha borrado nada");
+        }
+    }
+
     private void buscarProveedores(ActionEvent e) {
         JTextArea ta = this.taTextoConsulta;
         //Se vacia el textArea para no liar datos
@@ -85,6 +175,7 @@ public class Proveedores extends JFrame {
         String hql = "select new list(codigo, nombre, apellidos, direccion) from ProveedoresEntity";
 
         if(hasDataCodeCField()){
+            turnCodeCUpp();
             if(tfCCodigo.getText().length() > 6){
                 JOptionPane.showMessageDialog(this, "El Codigo no puede tener mas de 6 caracteres","Error" , JOptionPane.ERROR_MESSAGE);
             }else{
@@ -170,10 +261,14 @@ public class Proveedores extends JFrame {
         }
     }
 
-    /*
-    *
-    * Gestion
-    * */
+
+    private void turnCodeGUpp(){
+        tfGCodProv.setText(tfGCodProv.getText().toUpperCase());
+    }
+    private void turnCodeCUpp(){
+        tfCCodigo.setText(tfCCodigo.getText().toUpperCase());
+    }
+
     private boolean checkCodeField(){
         JTextField tfCod = this.tfGCodProv;
         if(tfCod.getText().isBlank()){
@@ -212,6 +307,10 @@ public class Proveedores extends JFrame {
 
 
 
+
+
+
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
@@ -228,6 +327,7 @@ public class Proveedores extends JFrame {
         tfCDireccion = new JTextField();
         btnFiltrar = new JButton();
         btnVolver = new JButton();
+        btnBorrarC = new JButton();
         panel1 = new JPanel();
         label1 = new JLabel();
         label2 = new JLabel();
@@ -303,6 +403,12 @@ public class Proveedores extends JFrame {
                         panel2.add(btnVolver);
                         btnVolver.setBounds(new Rectangle(new Point(525, 325), btnVolver.getPreferredSize()));
 
+                        //---- btnBorrarC ----
+                        btnBorrarC.setText("Borrar Todo");
+                        btnBorrarC.addActionListener(e -> eliminarBusquedas(e));
+                        panel2.add(btnBorrarC);
+                        btnBorrarC.setBounds(new Rectangle(new Point(255, 330), btnBorrarC.getPreferredSize()));
+
                         {
                             // compute preferred size
                             Dimension preferredSize = new Dimension();
@@ -366,11 +472,13 @@ public class Proveedores extends JFrame {
 
                         //---- btnModificar ----
                         btnModificar.setText("Modificar");
+                        btnModificar.addActionListener(e -> updateProveedor(e));
                         panel1.add(btnModificar);
                         btnModificar.setBounds(new Rectangle(new Point(325, 250), btnModificar.getPreferredSize()));
 
                         //---- btnEliminar ----
                         btnEliminar.setText("Eliminar");
+                        btnEliminar.addActionListener(e -> deleteProveedor(e));
                         panel1.add(btnEliminar);
                         btnEliminar.setBounds(new Rectangle(new Point(425, 250), btnEliminar.getPreferredSize()));
 
@@ -454,6 +562,7 @@ public class Proveedores extends JFrame {
     private JTextField tfCDireccion;
     private JButton btnFiltrar;
     private JButton btnVolver;
+    private JButton btnBorrarC;
     private JPanel panel1;
     private JLabel label1;
     private JLabel label2;
