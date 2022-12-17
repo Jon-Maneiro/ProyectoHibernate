@@ -4,8 +4,14 @@
 
 package view;
 
+import com.company.GestionEntity;
+import org.hibernate.Session;
+import util.HibernateUtil;
+import org.hibernate.query.Query;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 import javax.swing.*;
 
 /**
@@ -14,16 +20,35 @@ import javax.swing.*;
 public class listadogestion extends JFrame {
     public listadogestion() {
         initComponents();
+        cargarTablaGestiones();
     }
 
     private void cerrarVentana(ActionEvent e) {
         this.dispose();
     }
 
+    private void cargarTablaGestiones(){
+        JTextArea ta = taConsultas;
+        ta.setText("");
+
+        String hql = "from GestionEntity";
+
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        Query query = sesion.createQuery(hql);
+        List<GestionEntity> resultado = query.list();
+        sesion.close();
+
+        for(GestionEntity g: resultado){
+            ta.append(""+g.getCodProveedor()+" "+g.getCodPieza()+" "+g.getCodProyecto()+" "+g.getCantidad()+"\n");
+        }
+
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         btnVolver = new JButton();
         scrollPane1 = new JScrollPane();
+        taConsultas = new JTextArea();
 
         //======== this ========
         var contentPane = getContentPane();
@@ -34,6 +59,14 @@ public class listadogestion extends JFrame {
         btnVolver.addActionListener(e -> cerrarVentana(e));
         contentPane.add(btnVolver);
         btnVolver.setBounds(new Rectangle(new Point(545, 380), btnVolver.getPreferredSize()));
+
+        //======== scrollPane1 ========
+        {
+
+            //---- taConsultas ----
+            taConsultas.setEditable(false);
+            scrollPane1.setViewportView(taConsultas);
+        }
         contentPane.add(scrollPane1);
         scrollPane1.setBounds(5, 5, 620, 375);
 
@@ -59,5 +92,6 @@ public class listadogestion extends JFrame {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     private JButton btnVolver;
     private JScrollPane scrollPane1;
+    private JTextArea taConsultas;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

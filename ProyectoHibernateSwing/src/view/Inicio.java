@@ -188,9 +188,10 @@ public class Inicio extends JFrame {
         setJMenuBar(menuBar1);
 
         //---- label1 ----
-        label1.setIcon(new ImageIcon("\\Recursos\\Logo.png"));
+        label1.setText("BIENVENID@ a Gestion Proyectos");
+        label1.setHorizontalAlignment(SwingConstants.CENTER);
         contentPane.add(label1);
-        label1.setBounds(new Rectangle(new Point(85, 25), label1.getPreferredSize()));
+        label1.setBounds(0, 0, 605, 365);
 
         {
             // compute preferred size
