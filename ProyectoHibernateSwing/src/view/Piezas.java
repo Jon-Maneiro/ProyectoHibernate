@@ -14,6 +14,7 @@ import org.hibernate.Session;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import javax.swing.*;
 
@@ -72,9 +73,8 @@ public class Piezas extends JFrame {
             sesion.save(piez);
 
             sesion.getTransaction().commit();
-            HibernateUtil.shutdown();
-            JOptionPane.showMessageDialog(this, "La pieza ha sido insertada","Insercion" , JOptionPane.INFORMATION_MESSAGE);
-
+            sesion.close();
+            JOptionPane.showMessageDialog(this, "La pieza ha sido insertada", "Insercion", JOptionPane.INFORMATION_MESSAGE);
         }else{
             JOptionPane.showMessageDialog(this, "Los datos introducidos no son correctos","Error" , JOptionPane.ERROR_MESSAGE);
         }
@@ -101,7 +101,7 @@ public class Piezas extends JFrame {
                 sesion.update(pe);
                 sesion.getTransaction().commit();
 
-                HibernateUtil.shutdown();
+                sesion.close();
                 JOptionPane.showMessageDialog(this, "La pieza ha sido actualizada","Actualizacion" , JOptionPane.INFORMATION_MESSAGE);
 
             }catch(ObjectNotFoundException o){
@@ -126,7 +126,7 @@ public class Piezas extends JFrame {
                 sesion.delete(pe);
                 sesion.getTransaction().commit();
 
-                HibernateUtil.shutdown();
+                sesion.close();
                 JOptionPane.showMessageDialog(this, "La pieza ha sido eliminada","Eliminacion" , JOptionPane.INFORMATION_MESSAGE);
 
             }catch(ObjectNotFoundException o){
@@ -155,7 +155,7 @@ public class Piezas extends JFrame {
             }
 
             sesion.getTransaction().commit();//Esto podría ponerse dentro del bucle si da algun tipo de error
-            HibernateUtil.shutdown();
+            sesion.close();
             JOptionPane.showMessageDialog(null, "Eliminacion Completada.\n Han quedado "+contador+" piezas sin eliminar de la consulta");
         } else {
             JOptionPane.showMessageDialog(null, "No se ha borrado nada");
@@ -168,8 +168,8 @@ public class Piezas extends JFrame {
         //Primero hay que mirar que campos tienen datos, y si esos datos son correctos
         String codigo = "";
         String nombre = "";
-
-        String hql = "select new list(codigo, nombre,precio,descripcion) from PiezasEntity";
+        //select new list(codigo,nombre,precio,descripcion)
+        String hql = "from PiezasEntity ";
         if(hasDataCodeCField()){
             turnCodeCUpp();
             if(tfCCodigo.getText().length() > 6){
@@ -204,6 +204,7 @@ public class Piezas extends JFrame {
 
         Query query = sesion.createQuery(hql);
         List<PiezasEntity> resultado = query.list();
+        sesion.close();
         listaPiezas = resultado;
 
         for(PiezasEntity p: resultado){
@@ -334,6 +335,9 @@ public class Piezas extends JFrame {
 
                 //======== scrollPane1 ========
                 {
+
+                    //---- taTextoConsulta ----
+                    taTextoConsulta.setEditable(false);
                     scrollPane1.setViewportView(taTextoConsulta);
                 }
                 panel2.add(scrollPane1);

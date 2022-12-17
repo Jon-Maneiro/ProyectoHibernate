@@ -56,6 +56,11 @@ public class Inicio extends JFrame {
         proy.setVisible(true);
     }
 
+    private void irAPPP(ActionEvent e) {
+        PPP ppp = new PPP();
+        ppp.setVisible(true);
+    }
+
 
 
 
@@ -152,6 +157,7 @@ public class Inicio extends JFrame {
 
                 //---- miProvPieProy ----
                 miProvPieProy.setText("Proveedores,Piezas y Proyectos");
+                miProvPieProy.addActionListener(e -> irAPPP(e));
                 meGestion.add(miProvPieProy);
 
                 //---- miSumProv ----
@@ -182,7 +188,7 @@ public class Inicio extends JFrame {
         setJMenuBar(menuBar1);
 
         //---- label1 ----
-        label1.setIcon(new ImageIcon("C:\\Users\\9FDAM08\\Desktop\\ProyectoHibernate\\ProyectoHibernate\\Recursos\\Logo.png"));
+        label1.setIcon(new ImageIcon("\\Recursos\\Logo.png"));
         contentPane.add(label1);
         label1.setBounds(new Rectangle(new Point(85, 25), label1.getPreferredSize()));
 

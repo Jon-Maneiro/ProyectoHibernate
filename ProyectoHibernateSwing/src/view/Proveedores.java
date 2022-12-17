@@ -61,7 +61,7 @@ public class Proveedores extends JFrame {
             String codigo = tfGCodProv.getText();
             String nombre = tfGNombre.getText();
             String apellido = tfGApellidos.getText();
-            String direccion = tfCDireccion.getText();
+            String direccion = tfGDireccion.getText();
             //Empezamos la insercion
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
@@ -104,7 +104,7 @@ public class Proveedores extends JFrame {
                 sesion.update(pr);
                 sesion.getTransaction().commit();
 
-                HibernateUtil.shutdown();
+                sesion.close();
                 JOptionPane.showMessageDialog(this, "El Proveedor ha sido actualizado","Actualizacion" , JOptionPane.INFORMATION_MESSAGE);
 
             }catch(ObjectNotFoundException o){
@@ -128,7 +128,7 @@ public class Proveedores extends JFrame {
                 sesion.delete(pr);
                 sesion.getTransaction().commit();
 
-                HibernateUtil.shutdown();
+                sesion.close();
                 JOptionPane.showMessageDialog(this, "El Proveedor ha sido eliminado","Eliminacion" , JOptionPane.INFORMATION_MESSAGE);
             }catch(ObjectNotFoundException o){
                 JOptionPane.showMessageDialog(this, "Ese Proveedor no existe en la BBDD","Error" , JOptionPane.ERROR_MESSAGE);
@@ -156,7 +156,7 @@ public class Proveedores extends JFrame {
             }
 
             sesion.getTransaction().commit();//Esto podría ponerse dentro del bucle si da algun tipo de error
-            HibernateUtil.shutdown();
+            sesion.close();
             JOptionPane.showMessageDialog(null, "Eliminacion Completada.\n Han quedado "+contador+" proveedores sin eliminar de la consulta");
         } else {
             JOptionPane.showMessageDialog(null, "No se ha borrado nada");
@@ -171,8 +171,8 @@ public class Proveedores extends JFrame {
         String codigo = "";
         String nombre = "";
         String dir = "";
-
-        String hql = "select new list(codigo, nombre, apellidos, direccion) from ProveedoresEntity";
+        //select new list(codigo, nombre, apellidos, direccion)
+        String hql = "from ProveedoresEntity";
 
         if(hasDataCodeCField()){
             turnCodeCUpp();
@@ -219,7 +219,7 @@ public class Proveedores extends JFrame {
 
         Query query = sesion.createQuery(hql);
         List<ProveedoresEntity> resultado = query.list();
-
+        sesion.close();
 
         for(ProveedoresEntity p: resultado){
             ta.append(""+p.getCodigo()+" "+p.getNombre()+" "+p.getApellidos()+" "+p.getDireccion()+"\n");
@@ -365,6 +365,9 @@ public class Proveedores extends JFrame {
 
                         //======== scrollPane1 ========
                         {
+
+                            //---- taTextoConsulta ----
+                            taTextoConsulta.setEditable(false);
                             scrollPane1.setViewportView(taTextoConsulta);
                         }
                         panel2.add(scrollPane1);

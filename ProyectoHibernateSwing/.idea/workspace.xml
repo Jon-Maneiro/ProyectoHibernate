@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="8ce1208a-c3b4-4486-854f-0847f7b3bf16" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,10 +36,15 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "C:/Users/9FDAM08/Desktop/ProyectoHibernate/ProyectoHibernate/lib/mysql-connector-java-8.0.23.jar",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15917969",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
@@ -72,6 +80,8 @@
       <workItem from="1670874149024" duration="3241000" />
       <workItem from="1671125619136" duration="4680000" />
       <workItem from="1671211664640" duration="10467000" />
+      <workItem from="1671268475013" duration="125000" />
+      <workItem from="1671268608237" duration="2802000" />
     </task>
     <servers />
   </component>

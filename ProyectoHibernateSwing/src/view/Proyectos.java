@@ -69,7 +69,7 @@ public class Proyectos extends JFrame {
             sesion.save(proy);
 
             sesion.getTransaction().commit();
-            HibernateUtil.shutdown();
+            sesion.close();
             JOptionPane.showMessageDialog(this, "El Proyecto ha sido insertado","Insercion" , JOptionPane.INFORMATION_MESSAGE);
 
         }else{
@@ -96,7 +96,7 @@ public class Proyectos extends JFrame {
                sesion.update(po);
                sesion.getTransaction().commit();
 
-               HibernateUtil.shutdown();
+               sesion.close();
                JOptionPane.showMessageDialog(this, "El Proyecto ha sido actualizado","Actualizacion" , JOptionPane.INFORMATION_MESSAGE);
 
            }catch(ObjectNotFoundException x){
@@ -119,7 +119,7 @@ public class Proyectos extends JFrame {
                 sesion.delete(po);
                 sesion.getTransaction().commit();
 
-                HibernateUtil.shutdown();
+                sesion.close();
                 JOptionPane.showMessageDialog(this, "El Proyecto ha sido eliminado","Eliminacion" , JOptionPane.INFORMATION_MESSAGE);
             }catch(ObjectNotFoundException o){
                 JOptionPane.showMessageDialog(this, "Ese Proyecto no existe en la BBDD","Error" , JOptionPane.ERROR_MESSAGE);
@@ -146,7 +146,7 @@ public class Proyectos extends JFrame {
             }
 
             sesion.getTransaction().commit();//Esto podría ponerse dentro del bucle si da algun tipo de error
-            HibernateUtil.shutdown();
+            sesion.close();
             JOptionPane.showMessageDialog(null, "Eliminacion Completada.\n Han quedado "+contador+" proyectos sin eliminar de la consulta");
         } else {
             JOptionPane.showMessageDialog(null, "No se ha borrado nada");
@@ -161,8 +161,8 @@ public class Proyectos extends JFrame {
         String codigo = "";
         String nombre = "";
         String ciudad = "";
-
-        String hql = "select new list(codigo,nombre,ciudad) from ProyectosEntity";
+        //select new list(codigo,nombre,ciudad)
+        String hql = "from ProyectosEntity";
         if(hasDataCodeCField()){
             turnCodeCUpp();
             if(tfCCodigo.getText().length() > 6){
@@ -203,6 +203,8 @@ public class Proyectos extends JFrame {
 
         Query query = sesion.createQuery(hql);
         List<ProyectosEntity> resultado = query.list();
+
+        sesion.close();
 
         for(ProyectosEntity p: resultado){
             ta.append(""+p.getCodigo()+" "+p.getNombre()+" "+p.getCiudad()+"\n");
@@ -343,6 +345,9 @@ public class Proyectos extends JFrame {
 
                         //======== scrollPane1 ========
                         {
+
+                            //---- tatextoConsulta ----
+                            tatextoConsulta.setEditable(false);
                             scrollPane1.setViewportView(tatextoConsulta);
                         }
                         panel2.add(scrollPane1);

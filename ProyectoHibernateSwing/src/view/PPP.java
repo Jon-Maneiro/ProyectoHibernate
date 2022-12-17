@@ -16,7 +16,7 @@ import java.util.List;
 import javax.swing.*;
 
 /**
- * @author unknown
+ * @author Jon Maneiro García
  */
 public class PPP extends JFrame {
     public PPP() {
@@ -46,16 +46,20 @@ public class PPP extends JFrame {
         JComboBox cbPie = cbCodPiez;
         JComboBox cbProy = cbCodProy;
 
+
+        cbProv.addItem("Elige");
         for(ProveedoresEntity p:proveedores){
             cbProv.addItem(p.getCodigo());
         }
+        cbPie.addItem("Elige");
         for(PiezasEntity p:piezas){
             cbPie.addItem(p.getCodigo());
         }
+        cbProy.addItem("Elige");
         for(ProyectosEntity p:proyectos){
             cbProy.addItem(p.getCodigo());
         }
-        HibernateUtil.shutdown();
+        sesion.close();
     }
 
     private boolean hasDataCantidad(){
@@ -100,47 +104,53 @@ public class PPP extends JFrame {
     }
 
     private void cargarProveedor(ActionEvent e) {
-        Session sesion = HibernateUtil.getSessionFactory().openSession();
-        sesion.beginTransaction();
-        try{
-            ProveedoresEntity p = (ProveedoresEntity) sesion.load(ProveedoresEntity.class, cbCodProv.getSelectedItem().toString());
-            tfNomProv.setText(p.getNombre());
-            tfDirProv.setText(p.getDireccion());
-            HibernateUtil.shutdown();
-            cargarRelacion();
-        }catch(ObjectNotFoundException o){
-            JOptionPane.showMessageDialog(this, "Ha ocurrido un error y no puede recuperarse el Proveedor","Error" , JOptionPane.ERROR_MESSAGE);
+        if(checkCbCodProv()) {
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+            try {
+                ProveedoresEntity p = (ProveedoresEntity) sesion.load(ProveedoresEntity.class, cbCodProv.getSelectedItem().toString());
+                tfNomProv.setText(p.getNombre());
+                tfDirProv.setText(p.getDireccion());
+                sesion.close();
+                cargarRelacion();
+            } catch (ObjectNotFoundException o) {
+                JOptionPane.showMessageDialog(this, "Ha ocurrido un error y no puede recuperarse el Proveedor", "Error", JOptionPane.ERROR_MESSAGE);
 
+            }
         }
     }
 
     private void cargarPieza(ActionEvent e) {
-        Session sesion = HibernateUtil.getSessionFactory().openSession();
-        sesion.beginTransaction();
-        try{
-            PiezasEntity p = (PiezasEntity)sesion.load(PiezasEntity.class, cbCodPiez.getSelectedItem().toString());
-            tfNomPiez.setText(p.getNombre());
-            tfPrecioPiez.setText(p.getPrecio()+"");
-            HibernateUtil.shutdown();
-            cargarRelacion();
-        }catch(ObjectNotFoundException o){
-            JOptionPane.showMessageDialog(this, "Ha ocurrido un error y no puede recuperarse la Pieza","Error" , JOptionPane.ERROR_MESSAGE);
+        if(checkCbCodPiez()) {
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+            try {
+                PiezasEntity p = (PiezasEntity) sesion.load(PiezasEntity.class, cbCodPiez.getSelectedItem().toString());
+                tfNomPiez.setText(p.getNombre());
+                tfPrecioPiez.setText(p.getPrecio() + "");
+                sesion.close();
+                cargarRelacion();
+            } catch (ObjectNotFoundException o) {
+                JOptionPane.showMessageDialog(this, "Ha ocurrido un error y no puede recuperarse la Pieza", "Error", JOptionPane.ERROR_MESSAGE);
 
+            }
         }
     }
 
     private void cargarProyecto(ActionEvent e) {
-        Session sesion = HibernateUtil.getSessionFactory().openSession();
-        sesion.beginTransaction();
-        try{
-            ProyectosEntity p = (ProyectosEntity) sesion.load(ProyectosEntity.class, cbCodProy.getSelectedItem().toString());
-            tfNomProy.setText(p.getNombre());
-            tfCiuProy.setText(p.getCiudad());
-            HibernateUtil.shutdown();
-            cargarRelacion();
-        }catch(ObjectNotFoundException o){
-            JOptionPane.showMessageDialog(this, "Ha ocurrido un error y no puede recuperarse el Proyecto","Error" , JOptionPane.ERROR_MESSAGE);
+        if(checkCbCodProy()) {
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+            try {
+                ProyectosEntity p = (ProyectosEntity) sesion.load(ProyectosEntity.class, cbCodProy.getSelectedItem().toString());
+                tfNomProy.setText(p.getNombre());
+                tfCiuProy.setText(p.getCiudad());
+                sesion.close();
+                cargarRelacion();
+            } catch (ObjectNotFoundException o) {
+                JOptionPane.showMessageDialog(this, "Ha ocurrido un error y no puede recuperarse el Proyecto", "Error", JOptionPane.ERROR_MESSAGE);
 
+            }
         }
     }
 
@@ -164,7 +174,7 @@ public class PPP extends JFrame {
 
             sesion.getTransaction().commit();
 
-            HibernateUtil.shutdown();
+            sesion.close();
             JOptionPane.showMessageDialog(this, "Se ha introducido la relacion","Insercion" , JOptionPane.INFORMATION_MESSAGE);
 
         }else{
@@ -189,8 +199,8 @@ public class PPP extends JFrame {
                 sesion.update(gest);
                 sesion.getTransaction().commit();
 
-                HibernateUtil.shutdown();
-                JOptionPane.showMessageDialog(this, "Se ha modificado la relacion","Error" , JOptionPane.ERROR_MESSAGE);
+                sesion.close();
+                JOptionPane.showMessageDialog(this, "Se ha modificado la relacion","Modificacion" , JOptionPane.INFORMATION_MESSAGE);
 
 
             }catch(ObjectNotFoundException o){
@@ -219,7 +229,7 @@ public class PPP extends JFrame {
                 PiezasEntity pie = (PiezasEntity) sesion.load(PiezasEntity.class, gest.getCodPieza());
                 ProyectosEntity proy = (ProyectosEntity) sesion.load(ProyectosEntity.class, gest.getCodProyecto());
 
-                HibernateUtil.shutdown();
+                sesion.close();
                 tfCantidad.setText(gest.getCantidad() +"");
                 tfNomProv.setText(prov.getNombre());
                 tfDirProv.setText(prov.getDireccion());
@@ -250,8 +260,8 @@ public class PPP extends JFrame {
                 sesion.delete(gest);
                 sesion.getTransaction().commit();
 
-                HibernateUtil.shutdown();
-                JOptionPane.showMessageDialog(this, "Se ha modificado la relacion","Error" , JOptionPane.ERROR_MESSAGE);
+                sesion.close();
+                JOptionPane.showMessageDialog(this, "Se ha modificado la relacion","Eliminacion" , JOptionPane.INFORMATION_MESSAGE);
 
 
             }catch(ObjectNotFoundException o){
@@ -311,7 +321,7 @@ public class PPP extends JFrame {
         cbCodProv.setToolTipText("Elige un Codigo");
         cbCodProv.addActionListener(e -> cargarProveedor(e));
         contentPane.add(cbCodProv);
-        cbCodProv.setBounds(new Rectangle(new Point(85, 85), cbCodProv.getPreferredSize()));
+        cbCodProv.setBounds(85, 85, 95, cbCodProv.getPreferredSize().height);
 
         //---- tfNomProv ----
         tfNomProv.setEditable(false);
@@ -332,7 +342,7 @@ public class PPP extends JFrame {
         cbCodPiez.setToolTipText("Elige un Codigo");
         cbCodPiez.addActionListener(e -> cargarPieza(e));
         contentPane.add(cbCodPiez);
-        cbCodPiez.setBounds(85, 155, 79, 30);
+        cbCodPiez.setBounds(85, 155, 95, 30);
 
         //---- tfNomPiez ----
         tfNomPiez.setEditable(false);
@@ -353,7 +363,7 @@ public class PPP extends JFrame {
         cbCodProy.setToolTipText("Elige un Codigo");
         cbCodProy.addActionListener(e -> cargarProyecto(e));
         contentPane.add(cbCodProy);
-        cbCodProy.setBounds(85, 225, 79, 30);
+        cbCodProy.setBounds(85, 225, 95, 30);
 
         //---- tfNomProy ----
         tfNomProy.setEditable(false);

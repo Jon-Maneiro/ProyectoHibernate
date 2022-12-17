@@ -9,7 +9,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * @author unknown
+ * @author Jon Maneiro García
  */
 public class listadogestion extends JFrame {
     public listadogestion() {

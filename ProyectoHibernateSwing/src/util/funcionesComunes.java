@@ -1,5 +1,7 @@
 package util;
-
+/**
+ * @author Jon Maneiro García
+ */
 public class funcionesComunes {
 
     /**

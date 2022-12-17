@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="gestionproyectos@localhost">
-  <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.43">
+  <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.45">
     <root id="1">
       <DefaultCasing>lower/lower</DefaultCasing>
       <DefaultEngine>InnoDB</DefaultEngine>
@@ -46,6 +46,7 @@
 |root||root|localhost|FLUSH_TABLES|G
 |root||root|localhost|FLUSH_USER_RESOURCES|G
 |root||root|localhost|GROUP_REPLICATION_ADMIN|G
+|root||root|localhost|GROUP_REPLICATION_STREAM|G
 |root||root|localhost|INDEX|G
 |root||root|localhost|INNODB_REDO_LOG_ARCHIVE|G
 |root||root|localhost|INNODB_REDO_LOG_ENABLE|G
@@ -992,211 +993,205 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     <collation id="287" parent="1" name="utf8mb4_zh_0900_as_cs">
       <Charset>utf8mb4</Charset>
     </collation>
-    <schema id="288" parent="1" name="actividad1">
+    <schema id="288" parent="1" name="agencia1">
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <schema id="289" parent="1" name="agencia1">
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </schema>
-    <schema id="290" parent="1" name="departamentos">
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </schema>
-    <schema id="291" parent="1" name="empleados">
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </schema>
-    <schema id="292" parent="1" name="gestionproyectos">
+    <schema id="289" parent="1" name="gestionproyectos">
       <Current>1</Current>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <schema id="293" parent="1" name="information_schema">
+    <schema id="290" parent="1" name="information_schema">
       <CollationName>utf8mb3_general_ci</CollationName>
     </schema>
-    <schema id="294" parent="1" name="mysql">
+    <schema id="291" parent="1" name="mysql">
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <schema id="295" parent="1" name="performance_schema">
+    <schema id="292" parent="1" name="performance_schema">
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <schema id="296" parent="1" name="proyecto">
+    <schema id="293" parent="1" name="sakila">
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <schema id="297" parent="1" name="sys">
+    <schema id="294" parent="1" name="sys">
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <user id="298" parent="1" name="mysql.infoschema">
+    <schema id="295" parent="1" name="world">
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </schema>
+    <user id="296" parent="1" name="mysql.infoschema">
       <CanLogin>0</CanLogin>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <user id="299" parent="1" name="mysql.session">
+    <user id="297" parent="1" name="mysql.session">
       <CanLogin>0</CanLogin>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <user id="300" parent="1" name="mysql.sys">
+    <user id="298" parent="1" name="mysql.sys">
       <CanLogin>0</CanLogin>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <user id="301" parent="1" name="root">
+    <user id="299" parent="1" name="root">
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <table id="302" parent="292" name="gestion">
+    <table id="300" parent="289" name="gestion">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="303" parent="292" name="piezas">
+    <table id="301" parent="289" name="piezas">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="304" parent="292" name="proveedores">
+    <table id="302" parent="289" name="proveedores">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="305" parent="292" name="proyectos">
+    <table id="303" parent="289" name="proyectos">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <column id="306" parent="302" name="CodProveedor">
-      <DataType>varchar(6)|0s</DataType>
+    <column id="304" parent="300" name="CodProveedor">
+      <DasType>varchar(6)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="307" parent="302" name="CodPieza">
-      <DataType>varchar(6)|0s</DataType>
+    <column id="305" parent="300" name="CodPieza">
+      <DasType>varchar(6)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="308" parent="302" name="CodProyecto">
-      <DataType>varchar(6)|0s</DataType>
+    <column id="306" parent="300" name="CodProyecto">
+      <DasType>varchar(6)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="309" parent="302" name="Cantidad">
-      <DataType>float|0s</DataType>
+    <column id="307" parent="300" name="Cantidad">
+      <DasType>float|0s</DasType>
       <Position>4</Position>
     </column>
-    <foreign-key id="310" parent="302" name="GestionProveedorProveedor">
+    <foreign-key id="308" parent="300" name="GestionProveedorProveedor">
       <ColNames>CodProveedor</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>Codigo</RefColNames>
       <RefTableName>proveedores</RefTableName>
     </foreign-key>
-    <foreign-key id="311" parent="302" name="GestionPiezaPieza">
+    <foreign-key id="309" parent="300" name="GestionPiezaPieza">
       <ColNames>CodPieza</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>Codigo</RefColNames>
       <RefTableName>piezas</RefTableName>
     </foreign-key>
-    <foreign-key id="312" parent="302" name="GestionProyectoProyecto">
+    <foreign-key id="310" parent="300" name="GestionProyectoProyecto">
       <ColNames>CodProyecto</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>Codigo</RefColNames>
       <RefTableName>proyectos</RefTableName>
     </foreign-key>
-    <index id="313" parent="302" name="PRIMARY">
+    <index id="311" parent="300" name="PRIMARY">
       <ColNames>CodProveedor
 CodPieza
 CodProyecto</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="314" parent="302" name="GestionPiezaPieza_idx">
+    <index id="312" parent="300" name="GestionPiezaPieza_idx">
       <ColNames>CodPieza</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="315" parent="302" name="GestionProyectoProyecto_idx">
+    <index id="313" parent="300" name="GestionProyectoProyecto_idx">
       <ColNames>CodProyecto</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="316" parent="302" name="PRIMARY">
+    <key id="314" parent="300" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="317" parent="303" name="Codigo">
-      <DataType>varchar(6)|0s</DataType>
+    <column id="315" parent="301" name="Codigo">
+      <DasType>varchar(6)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="318" parent="303" name="Nombre">
-      <DataType>varchar(20)|0s</DataType>
+    <column id="316" parent="301" name="Nombre">
+      <DasType>varchar(20)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="319" parent="303" name="Precio">
-      <DataType>float|0s</DataType>
+    <column id="317" parent="301" name="Precio">
+      <DasType>float|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="320" parent="303" name="Descripcion">
-      <DataType>longtext|0s</DataType>
+    <column id="318" parent="301" name="Descripcion">
+      <DasType>longtext|0s</DasType>
       <Position>4</Position>
     </column>
-    <index id="321" parent="303" name="PRIMARY">
+    <index id="319" parent="301" name="PRIMARY">
       <ColNames>Codigo</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="322" parent="303" name="PRIMARY">
+    <key id="320" parent="301" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="323" parent="304" name="Codigo">
-      <DataType>varchar(6)|0s</DataType>
+    <column id="321" parent="302" name="Codigo">
+      <DasType>varchar(6)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="324" parent="304" name="Nombre">
-      <DataType>varchar(20)|0s</DataType>
+    <column id="322" parent="302" name="Nombre">
+      <DasType>varchar(20)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="325" parent="304" name="Apellidos">
-      <DataType>varchar(30)|0s</DataType>
+    <column id="323" parent="302" name="Apellidos">
+      <DasType>varchar(30)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="326" parent="304" name="Direccion">
-      <DataType>varchar(40)|0s</DataType>
+    <column id="324" parent="302" name="Direccion">
+      <DasType>varchar(40)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <index id="327" parent="304" name="PRIMARY">
+    <index id="325" parent="302" name="PRIMARY">
       <ColNames>Codigo</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="328" parent="304" name="PRIMARY">
+    <key id="326" parent="302" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="329" parent="305" name="Codigo">
-      <DataType>varchar(6)|0s</DataType>
+    <column id="327" parent="303" name="Codigo">
+      <DasType>varchar(6)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="330" parent="305" name="Nombre">
-      <DataType>varchar(40)|0s</DataType>
+    <column id="328" parent="303" name="Nombre">
+      <DasType>varchar(40)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="331" parent="305" name="Ciudad">
-      <DataType>varchar(40)|0s</DataType>
+    <column id="329" parent="303" name="Ciudad">
+      <DasType>varchar(40)|0s</DasType>
       <Position>3</Position>
     </column>
-    <index id="332" parent="305" name="PRIMARY">
+    <index id="330" parent="303" name="PRIMARY">
       <ColNames>Codigo</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="333" parent="305" name="PRIMARY">
+    <key id="331" parent="303" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
