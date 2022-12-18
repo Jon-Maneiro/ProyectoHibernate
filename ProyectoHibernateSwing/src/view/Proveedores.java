@@ -30,6 +30,10 @@ public class Proveedores extends JFrame {
         initComponents();
     }
 
+    /**
+     * Inicia la ventana en una de las dos pestañas disponibles
+     * @param elegir
+     */
     public void iniciarEnPestaña(boolean elegir){
         JTabbedPane tb = tabbedPane1;
         if(elegir == true){//Consultar
@@ -39,10 +43,18 @@ public class Proveedores extends JFrame {
         }
     }
 
+    /**
+     * Cierra la ventana actual
+     * @param e
+     */
     private void cerrarVentana(ActionEvent e) {
         this.dispose();
     }
 
+    /**
+     * Vacía los campos de la pantalla
+     * @param e
+     */
     private void vaciarCampos(ActionEvent e) {
         JTextField tfCod = this.tfGCodProv;
         JTextField tfNom = this.tfGNombre;
@@ -55,6 +67,10 @@ public class Proveedores extends JFrame {
         tfDir.setText("");
     }
 
+    /**
+     * Inserta un proveedor en BBDD según los datos introducidos
+     * @param e
+     */
     private void insertarProveedor(ActionEvent e) {
         if(checkCodeField() && checkNameField() && checkLastNameField() && checkAddressField()){
             turnCodeGUpp();
@@ -82,7 +98,10 @@ public class Proveedores extends JFrame {
             JOptionPane.showMessageDialog(this, "Los datos introducidos no son correctos","Error" , JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    /**
+     * Ejecuta el Update de un proveedor, por código, basado en los datos introducidos
+     * @param e
+     */
     private void updateProveedor(ActionEvent e) {
         if(checkCodeField() && (checkNameField() || checkLastNameField() || checkAddressField())){
             turnCodeGUpp();
@@ -115,7 +134,10 @@ public class Proveedores extends JFrame {
             JOptionPane.showMessageDialog(this, "Para poder modificar un objeto, se necesita el codigo y minimo otro campo a editar","Error" , JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    /**
+     * Elimina un proveedor, basandose en el codigo introducido
+     * @param e
+     */
     private void deleteProveedor(ActionEvent e) {
         if(checkCodeField()){
             turnCodeGUpp();
@@ -140,7 +162,10 @@ public class Proveedores extends JFrame {
 
         }
     }
-
+    /**
+     * Elimina todos los resultados que aparecen en pantalla, a excepcion de aquellos que tengan una relacion
+     * @param e
+     */
     private void eliminarBusquedas(ActionEvent e) {
         int reply = JOptionPane.showConfirmDialog(null, "¿Vas a proceder con la eliminacion de todos los objetos de la busqueda?\n Los objetos que tengan relaciones no se borrarán", "ELIMINACION MASIVA", JOptionPane.YES_NO_OPTION);
         int contador = 0;
@@ -162,7 +187,10 @@ public class Proveedores extends JFrame {
             JOptionPane.showMessageDialog(null, "No se ha borrado nada");
         }
     }
-
+    /**
+     * Ejecuta la función de filtrado de Proveedores, buscando en funcion de los parámetros introducidos
+     * @param e
+     */
     private void buscarProveedores(ActionEvent e) {
         JTextArea ta = this.taTextoConsulta;
         //Se vacia el textArea para no liar datos
@@ -235,6 +263,10 @@ public class Proveedores extends JFrame {
     * Consultas
     * */
 
+    /**
+     * Comprueba que el campo codigo de la pestaña de consultas tiene valores
+     * @return true/false
+     */
     private boolean hasDataCodeCField(){
         JTextField tfCod = this.tfCCodigo;
         if(tfCod.getText().isBlank()){
@@ -244,6 +276,10 @@ public class Proveedores extends JFrame {
         }
     }
 
+    /**
+     * Comprueba que el campo Nombre de la pestaña consultas tiene valores
+     * @return true/false
+     */
     private boolean hasDataNameCField(){
         JTextField tfName = this.tfCNombre;
         if(tfName.getText().isBlank()){
@@ -253,6 +289,10 @@ public class Proveedores extends JFrame {
         }
     }
 
+    /**
+     * Comprueba que el campo Direccion de la pestaña consultas tiene valores
+     * @return true/false
+     */
     private boolean hasDataDirCField(){
         JTextField tfDir = this.tfCDireccion;
         if(tfDir.getText().isBlank()){
@@ -262,14 +302,23 @@ public class Proveedores extends JFrame {
         }
     }
 
-
+    /**
+     * Convierte el campo Código a mayusculas, en caso de haberlo introducido en minusculas(Gestion)
+     */
     private void turnCodeGUpp(){
         tfGCodProv.setText(tfGCodProv.getText().toUpperCase());
     }
+    /**
+     * Convierte el campo Código a mayusculas, en caso de haberlo introducido en minusculas(Consultas)
+     */
     private void turnCodeCUpp(){
         tfCCodigo.setText(tfCCodigo.getText().toUpperCase());
     }
 
+    /**
+     * Comprueba que el campo Codigo es correcto
+     * @return true/false
+     */
     private boolean checkCodeField(){
         JTextField tfCod = this.tfGCodProv;
         if(tfCod.getText().isBlank()){
@@ -279,6 +328,10 @@ public class Proveedores extends JFrame {
         }
     }
 
+    /**
+     * Comprueba que el campo Nombre es correcto
+     * @return true/false
+     */
     private boolean checkNameField(){
         JTextField tfName = this.tfGNombre;
         if(tfName.getText().isBlank()){
@@ -287,7 +340,10 @@ public class Proveedores extends JFrame {
             return true;
         }
     }
-
+    /**
+     * Comprueba que el campo Apellido es correcto
+     * @return true/false
+     */
     private boolean checkLastNameField(){
         JTextField tfApe = this.tfGApellidos;
         if(tfApe.getText().isBlank()){
@@ -296,7 +352,10 @@ public class Proveedores extends JFrame {
             return true;
         }
     }
-
+    /**
+     * Comprueba que el campo Direccion es correcto
+     * @return true/false
+     */
     private boolean checkAddressField(){
         JTextField tfDir = this.tfGDireccion;
         if(tfDir.getText().isBlank()){

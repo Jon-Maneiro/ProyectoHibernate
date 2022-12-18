@@ -24,10 +24,17 @@ public class PPP extends JFrame {
         cargarDatosEnComboBox();
     }
 
+    /**
+     * Cierra la ventana actual
+     * @param e
+     */
     private void cerrarVentana(ActionEvent e) {
         this.dispose();
     }
 
+    /**
+     * Carga los códigos de cada entidad en los comboBox correspondientes para poder seleccionarlos
+     */
     private void cargarDatosEnComboBox(){
         Session sesion = HibernateUtil.getSessionFactory().openSession();
         String hql = "from ProveedoresEntity ";
@@ -62,6 +69,10 @@ public class PPP extends JFrame {
         sesion.close();
     }
 
+    /**
+     * Comprueba que el campo cantidad tiene informacion, y que es correcta
+     * @return
+     */
     private boolean hasDataCantidad(){
         JTextField x = tfCantidad;
         if(x.getText().isBlank()){
@@ -76,6 +87,10 @@ public class PPP extends JFrame {
         }
     }
 
+    /**
+     * Comprueba que el campo Codigo Proveedor este seleccionado
+     * @return
+     */
     private boolean checkCbCodProv(){
         JComboBox c = cbCodProv;
         if(c.getSelectedIndex() == 0){
@@ -85,6 +100,10 @@ public class PPP extends JFrame {
         }
     }
 
+    /**
+     * Comprueba que el campo Codigo Pieza este seleccionado
+     * @return
+     */
     private boolean checkCbCodPiez(){
         JComboBox c = cbCodPiez;
         if(c.getSelectedIndex() == 0){
@@ -93,7 +112,10 @@ public class PPP extends JFrame {
             return true;
         }
     }
-
+    /**
+     * Comprueba que el campo Codigo Proyecto este seleccionado
+     * @return
+     */
     private boolean checkCbCodProy(){
         JComboBox c = cbCodProy;
         if(c.getSelectedIndex() == 0){
@@ -103,6 +125,10 @@ public class PPP extends JFrame {
         }
     }
 
+    /**
+     * Carga el proveedor en funcion del codigo
+     * @param e
+     */
     private void cargarProveedor(ActionEvent e) {
         if(checkCbCodProv()) {
             Session sesion = HibernateUtil.getSessionFactory().openSession();
@@ -120,6 +146,10 @@ public class PPP extends JFrame {
         }
     }
 
+    /**
+     * Carga la pieza en funcion del codigo
+     * @param e
+     */
     private void cargarPieza(ActionEvent e) {
         if(checkCbCodPiez()) {
             Session sesion = HibernateUtil.getSessionFactory().openSession();
@@ -137,6 +167,10 @@ public class PPP extends JFrame {
         }
     }
 
+    /**
+     * Carga el Proyecto en funcion del codigo
+     * @param e
+     */
     private void cargarProyecto(ActionEvent e) {
         if(checkCbCodProy()) {
             Session sesion = HibernateUtil.getSessionFactory().openSession();
@@ -154,6 +188,10 @@ public class PPP extends JFrame {
         }
     }
 
+    /**
+     * Inserta una relacion en la BBDD
+     * @param e
+     */
     private void insertarRelacion(ActionEvent e) {
         if(checkCbCodProv() && checkCbCodPiez() && checkCbCodProy() && hasDataCantidad()){
             String codProv = cbCodProv.getSelectedItem().toString();
@@ -182,6 +220,10 @@ public class PPP extends JFrame {
         }
     }
 
+    /**
+     * Modifica una relacion de la BBDD
+     * @param e
+     */
     private void modificarRelacion(ActionEvent e) {
         if(checkCbCodProv() && checkCbCodPiez() && checkCbCodProy() && hasDataCantidad()){
             Session sesion = HibernateUtil.getSessionFactory().openSession();
@@ -211,6 +253,9 @@ public class PPP extends JFrame {
         }
     }
 
+    /**
+     * Carga una relación, si esta existe, al seleccionar los 3 Codigos
+     */
     private void cargarRelacion(){
         if(checkCbCodProv() && checkCbCodPiez() && checkCbCodProy()){
             Session sesion = HibernateUtil.getSessionFactory().openSession();
@@ -244,6 +289,10 @@ public class PPP extends JFrame {
         }
     }
 
+    /**
+     * Elimina una relacion de la BBDD
+     * @param e
+     */
     private void eliminarRelacion(ActionEvent e) {
         if(checkCbCodProv() && checkCbCodPiez() && checkCbCodProy()){
             Session sesion = HibernateUtil.getSessionFactory().openSession();
@@ -272,6 +321,10 @@ public class PPP extends JFrame {
         }
     }
 
+    /**
+     * Abre la ventana de listado de Gestiones
+     * @param e
+     */
     private void listarGestiones(ActionEvent e) {
         listadogestion x = new listadogestion();
         x.setVisible(true);

@@ -28,6 +28,10 @@ public class Piezas extends JFrame {
         initComponents();
     }
 
+    /**
+     * Inicia la ventana en una de las dos pestañas disponibles
+     * @param elegir
+     */
     public void iniciarEnPestaña(boolean elegir){
         JTabbedPane tb = tabbedPane1;
         if(elegir == true){//Consultar
@@ -36,10 +40,19 @@ public class Piezas extends JFrame {
             tb.setSelectedIndex(1);
         }
     }
+
+    /**
+     * Cierra la ventana actual
+     * @param e
+     */
     private void cerrarVentana(ActionEvent e) {
         this.dispose();
     }
 
+    /**
+     * Vacía los campos de la pantalla
+     * @param e
+     */
     private void vaciarCampos(ActionEvent e) {
         JTextField tfCod = this.tfGCodPiez;
         JTextField tfNom = this.tfGNombre;
@@ -52,6 +65,10 @@ public class Piezas extends JFrame {
         tfDes.setText("");
     }
 
+    /**
+     * Inserta una pieza en BBDD según los datos introducidos
+     * @param e
+     */
     private void insertarPieza(ActionEvent e) {
         if(checkCodeField() && checkNameField() && checkPrizeField() && checkDescriptionField()){
             turnCodeGUpp();
@@ -80,6 +97,10 @@ public class Piezas extends JFrame {
         }
     }
 
+    /**
+     * Ejecuta el Update de una pieza, por código, basado en los datos introducidos
+     * @param e
+     */
     private void updatePieza(ActionEvent e) {
         if(checkCodeField()&&(checkNameField() || checkPrizeField() || checkDescriptionField())){
             turnCodeGUpp();
@@ -115,6 +136,10 @@ public class Piezas extends JFrame {
         }
     }
 
+    /**
+     * Elimina una pieza, basandose en el codigo introducido
+     * @param e
+     */
     private void eliminarPieza(ActionEvent e) {
         if(checkCodeField()){
             turnCodeGUpp();
@@ -140,6 +165,11 @@ public class Piezas extends JFrame {
 
         }
     }
+
+    /**
+     * Elimina todos los resultados que aparecen en pantalla, a excepcion de aquellos que tengan una relacion
+     * @param e
+     */
     private void eliminarBusquedas(ActionEvent e) {
         int reply = JOptionPane.showConfirmDialog(null, "¿Vas a proceder con la eliminacion de todos los objetos de la busqueda?\n Los objetos que tengan relaciones no se borrarán", "ELIMINACION MASIVA", JOptionPane.YES_NO_OPTION);
         int contador = 0;
@@ -161,6 +191,11 @@ public class Piezas extends JFrame {
             JOptionPane.showMessageDialog(null, "No se ha borrado nada");
         }
     }
+
+    /**
+     * Ejecuta la función de filtrado de Piezas, buscando en funcion de los parámetros introducidos
+     * @param e
+     */
     private void buscarPiezas(ActionEvent e) {
         JTextArea ta = this.taTextoConsulta;
         //Se vacia el textArea para no liar datos
@@ -220,6 +255,10 @@ public class Piezas extends JFrame {
     *
     * */
 
+    /**
+     * Comprueba que el campo codigo de la pestaña de consultas tiene valores
+     * @return true/false
+     */
     private boolean hasDataCodeCField(){
         JTextField tfCod = this.tfCCodigo;
         if(tfCod.getText().isBlank()){
@@ -229,6 +268,10 @@ public class Piezas extends JFrame {
         }
     }
 
+    /**
+     * Comprueba que el campo Nombre de la pestaña consultas tiene valores
+     * @return true/false
+     */
     private boolean hasDataNameCField(){
         JTextField tfName = this.tfCNombre;
         if(tfName.getText().isBlank()){
@@ -238,13 +281,24 @@ public class Piezas extends JFrame {
         }
     }
 
+    /**
+     * Convierte el campo Código a mayusculas, en caso de haberlo introducido en minusculas(Gestion)
+     */
     private void turnCodeGUpp(){
         tfGCodPiez.setText(tfGCodPiez.getText().toUpperCase());
     }
+
+    /**
+     * Convierte el campo Código a mayusculas, en caso de haberlo introducido en minusculas(Consultas)
+     */
     private void turnCodeCUpp(){
         tfCCodigo.setText(tfCCodigo.getText().toUpperCase());
     }
 
+    /**
+     * Comprueba que el campo Codigo es correcto
+     * @return true/false
+     */
     private boolean checkCodeField(){
         JTextField tfCod = this.tfGCodPiez;
         if(tfCod.getText().isBlank()){
@@ -253,7 +307,10 @@ public class Piezas extends JFrame {
             return true;
         }
     }
-
+    /**
+     * Comprueba que el campo Nombre es correcto
+     * @return true/false
+     */
     private boolean checkNameField(){
         JTextField tfNom = this.tfGNombre;
         if(tfNom.getText().isBlank()){
@@ -262,7 +319,10 @@ public class Piezas extends JFrame {
             return true;
         }
     }
-
+    /**
+     * Comprueba que el campo Precio es correcto
+     * @return true/false
+     */
     private boolean checkPrizeField(){
         JTextField tfPre = this.tfGPrecio;
         if(tfPre.getText().isBlank()){
@@ -276,7 +336,10 @@ public class Piezas extends JFrame {
             }
         }
     }
-
+    /**
+     * Comprueba que el campo Descripcion es correcto
+     * @return true/false
+     */
     private boolean checkDescriptionField(){
         JTextField tfDes = this.tfGDescripcion;
         if(tfDes.getText().isBlank()){

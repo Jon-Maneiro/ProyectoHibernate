@@ -18,44 +18,79 @@ public class Inicio extends JFrame {
         initComponents();
     }
 
+    /**
+     * Abre la ventana de Información
+     * @param e
+     */
     private void abrirInfo(ActionEvent e) {
         Informacion info = new Informacion();
         info.setVisible(true);
     }
 
+    /**
+     * Abre la ventana de Proveedores, en el apartado de Consultas
+     * @param e
+     */
     private void abrirConsultarProveedores(ActionEvent e) {
         Proveedores prov = new Proveedores();
         prov.iniciarEnPestaña(true);
         prov.setVisible(true);
     }
+
+    /**
+     * Abre la ventana de Proveedores, en el apartado de Gestiones
+     * @param e
+     */
     private void abrirGestionProveedores(ActionEvent e) {
         Proveedores prov = new Proveedores();
         prov.iniciarEnPestaña(false);
         prov.setVisible(true);
     }
+
+    /**
+     * Abre la ventana de Piezas, en el apartado de Consultas
+     * @param e
+     */
     private void abrirConsultarPiezas(ActionEvent e) {
         Piezas piez = new Piezas();
         piez.iniciarEnPestaña(true);
         piez.setVisible(true);
     }
+
+    /**
+     * Abre la ventana de Piezas, en el apartado de Gestiones
+     * @param e
+     */
     private void abrirGestionarPiezas(ActionEvent e) {
         Piezas piez = new Piezas();
         piez.iniciarEnPestaña(false);
         piez.setVisible(true);
     }
 
+    /**
+     * Abre la ventana de Proyectos, en el apartado de Consultas
+     * @param e
+     */
     private void abrirConsultarProyectos(ActionEvent e) {
         Proyectos proy = new Proyectos();
         proy.iniciarEnPestaña(true);
         proy.setVisible(true);
     }
 
+    /**
+     * Abre la ventana de Proyectos, en el apartado de Gestión
+     * @param e
+     */
     private void abrirGestionProyectos(ActionEvent e) {
         Proyectos proy = new Proyectos();
         proy.iniciarEnPestaña(false);
         proy.setVisible(true);
     }
 
+    /**
+     * Abre la pantalla que controla la entidad Gestiones
+     * @param e
+     */
     private void irAPPP(ActionEvent e) {
         PPP ppp = new PPP();
         ppp.setVisible(true);

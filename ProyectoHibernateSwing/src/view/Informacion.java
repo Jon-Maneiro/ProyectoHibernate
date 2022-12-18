@@ -17,6 +17,10 @@ public class Informacion extends JFrame {
         initComponents();
     }
 
+    /**
+     * Sale de la ventana actual
+     * @param e
+     */
     private void infoVolver(ActionEvent e) {
         this.dispose();
     }

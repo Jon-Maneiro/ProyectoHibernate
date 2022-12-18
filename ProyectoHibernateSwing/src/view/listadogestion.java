@@ -23,10 +23,17 @@ public class listadogestion extends JFrame {
         cargarTablaGestiones();
     }
 
+    /**
+     * Cierra la ventana actual
+     * @param e
+     */
     private void cerrarVentana(ActionEvent e) {
         this.dispose();
     }
 
+    /**
+     * Carga los datos de la tabla Gestiones/ GestionesEntity
+     */
     private void cargarTablaGestiones(){
         JTextArea ta = taConsultas;
         ta.setText("");

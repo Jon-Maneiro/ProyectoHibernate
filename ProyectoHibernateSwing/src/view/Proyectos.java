@@ -28,6 +28,10 @@ public class Proyectos extends JFrame {
         initComponents();
     }
 
+    /**
+     * Inicia la ventana en una de las dos pestañas disponibles
+     * @param elegir
+     */
     public void iniciarEnPestaña(boolean elegir){
         JTabbedPane tb = tabbedPane1;
         if(elegir == true){//Consultar
@@ -36,10 +40,18 @@ public class Proyectos extends JFrame {
             tb.setSelectedIndex(1);
         }
     }
+    /**
+     * Cierra la ventana actual
+     * @param e
+     */
     private void cerrarVentana(ActionEvent e) {
         this.dispose();
     }
 
+    /**
+     * Vacía los campos de la pantalla
+     * @param e
+     */
     private void vaciarCampos(ActionEvent e) {
         JTextField tfCod = this.tfGCodProy;
         JTextField tfNom = this.tfGNombre;
@@ -49,7 +61,10 @@ public class Proyectos extends JFrame {
         tfNom.setText("");
         tfCiu.setText("");
     }
-
+    /**
+     * Inserta un proyecto en BBDD según los datos introducidos
+     * @param e
+     */
     private void insertarProyecto(ActionEvent e) {
         if(checkCodeField() && checkNameField() && checkCityField()){
             turnCodeGUpp();
@@ -77,7 +92,10 @@ public class Proyectos extends JFrame {
         }
     }
 
-
+    /**
+     * Ejecuta el Update de un proyecto, por código, basado en los datos introducidos
+     * @param e
+     */
     private void updateProyecto(ActionEvent e) {
         if(checkCodeField() && (checkNameField() || checkCityField())){
            turnCodeGUpp();
@@ -107,7 +125,10 @@ public class Proyectos extends JFrame {
             JOptionPane.showMessageDialog(this, "Para poder modificar un Proyecto, se necesita el codigo y otro de los campos como minimo","Error" , JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    /**
+     * Elimina un proyecto, basandose en el codigo introducido
+     * @param e
+     */
     private void deleteProyecto(ActionEvent e) {
         if(checkCodeField()){
             turnCodeGUpp();
@@ -131,6 +152,10 @@ public class Proyectos extends JFrame {
         }
     }
 
+    /**
+     * Elimina todos los resultados que aparecen en pantalla, a excepcion de aquellos que tengan una relacion
+     * @param e
+     */
     private void eliminarBusquedas(ActionEvent e) {
         int reply = JOptionPane.showConfirmDialog(null, "¿Vas a proceder con la eliminacion de todos los objetos de la busqueda?\n Los objetos que tengan relaciones no se borrarán", "ELIMINACION MASIVA", JOptionPane.YES_NO_OPTION);
         int contador = 0;
@@ -153,6 +178,10 @@ public class Proyectos extends JFrame {
         }
     }
 
+    /**
+     * Ejecuta la función de filtrado de Proyectos, buscando en funcion de los parámetros introducidos
+     * @param e
+     */
     private void buscarProyectos(ActionEvent e) {
         JTextArea ta = this.tatextoConsulta;
         //Se vacia el textArea para no liar datos
@@ -225,6 +254,10 @@ public class Proyectos extends JFrame {
     *
     *
     * */
+    /**
+     * Comprueba que el campo codigo de la pestaña de consultas tiene valores
+     * @return true/false
+     */
     private boolean hasDataCodeCField(){
         JTextField tfCod = this.tfCCodigo;
         if(tfCod.getText().isBlank()){
@@ -233,7 +266,10 @@ public class Proyectos extends JFrame {
             return true;
         }
     }
-
+    /**
+     * Comprueba que el campo Nombre de la pestaña consultas tiene valores
+     * @return true/false
+     */
     private boolean hasDataNameCField(){
         JTextField tfName = this.tfCNombre;
         if(tfName.getText().isBlank()){
@@ -242,7 +278,10 @@ public class Proyectos extends JFrame {
             return true;
         }
     }
-
+    /**
+     * Comprueba que el campo Ciudad de la pestaña consultas tiene valores
+     * @return true/false
+     */
     private boolean hasDataCityCField(){
         JTextField tfCity = this.tfCCiudad;
         if(tfCity.getText().isBlank()){
@@ -252,13 +291,23 @@ public class Proyectos extends JFrame {
         }
     }
 
+    /**
+     * Convierte el campo Código a mayusculas, en caso de haberlo introducido en minusculas(Gestion)
+     */
     private void turnCodeGUpp(){
         tfGCodProy.setText(tfGCodProy.getText().toUpperCase());
     }
+    /**
+     * Convierte el campo Código a mayusculas, en caso de haberlo introducido en minusculas(Consultas)
+     */
     private void turnCodeCUpp(){
         tfCCodigo.setText(tfCCodigo.getText().toUpperCase());
     }
 
+    /**
+     * Comprueba que el campo Codigo es correcto
+     * @return true/false
+     */
     private boolean checkCodeField(){
         JTextField tfCod = this.tfGCodProy;
         if(tfCod.getText().isBlank()){
@@ -267,7 +316,10 @@ public class Proyectos extends JFrame {
             return true;
         }
     }
-
+    /**
+     * Comprueba que el campo Nombre es correcto
+     * @return true/false
+     */
     private boolean checkNameField(){
         JTextField tfNom = this.tfGNombre;
         if(tfNom.getText().isBlank()){
@@ -276,7 +328,10 @@ public class Proyectos extends JFrame {
             return true;
         }
     }
-
+    /**
+     * Comprueba que el campo Ciudad es correcto
+     * @return true/false
+     */
     private boolean checkCityField(){
         JTextField tfCiu = this.tfGCiudad;
         if(tfCiu.getText().isBlank()){
