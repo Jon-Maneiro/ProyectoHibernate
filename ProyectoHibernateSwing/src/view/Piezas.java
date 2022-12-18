@@ -348,7 +348,7 @@ public class Piezas extends JFrame {
                 //---- label6 ----
                 label6.setText("Nombre");
                 panel2.add(label6);
-                label6.setBounds(0, 240, 44, 16);
+                label6.setBounds(0, 240, 55, 16);
 
                 //---- label5 ----
                 label5.setText("Codigo");
@@ -434,19 +434,19 @@ public class Piezas extends JFrame {
                 btnInsertar.setText("Insertar");
                 btnInsertar.addActionListener(e -> insertarPieza(e));
                 panel3.add(btnInsertar);
-                btnInsertar.setBounds(220, 250, 78, 30);
+                btnInsertar.setBounds(210, 250, 88, 30);
 
                 //---- btnModificar ----
                 btnModificar.setText("Modificar");
                 btnModificar.addActionListener(e -> updatePieza(e));
                 panel3.add(btnModificar);
-                btnModificar.setBounds(320, 250, 85, 30);
+                btnModificar.setBounds(310, 250, 95, 30);
 
                 //---- btnEliminar ----
                 btnEliminar.setText("Eliminar");
                 btnEliminar.addActionListener(e -> eliminarPieza(e));
                 panel3.add(btnEliminar);
-                btnEliminar.setBounds(420, 250, 78, 30);
+                btnEliminar.setBounds(410, 250, 88, 30);
 
                 //---- btnVolver2 ----
                 btnVolver2.setText("Volver");

@@ -219,6 +219,7 @@ public class Proveedores extends JFrame {
 
         Query query = sesion.createQuery(hql);
         List<ProveedoresEntity> resultado = query.list();
+        listaProveedores = resultado;
         sesion.close();
 
         for(ProveedoresEntity p: resultado){

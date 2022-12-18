@@ -261,7 +261,7 @@ public class PPP extends JFrame {
                 sesion.getTransaction().commit();
 
                 sesion.close();
-                JOptionPane.showMessageDialog(this, "Se ha modificado la relacion","Eliminacion" , JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Se ha eliminado la relacion","Eliminacion" , JOptionPane.INFORMATION_MESSAGE);
 
 
             }catch(ObjectNotFoundException o){
@@ -270,6 +270,11 @@ public class PPP extends JFrame {
         }else{
             JOptionPane.showMessageDialog(this, "Es necesario seleccionar todos los ID","Error" , JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private void listarGestiones(ActionEvent e) {
+        listadogestion x = new listadogestion();
+        x.setVisible(true);
     }
 
 
@@ -386,24 +391,25 @@ public class PPP extends JFrame {
         btnInsertar.setText("Insertar");
         btnInsertar.addActionListener(e -> insertarRelacion(e));
         contentPane.add(btnInsertar);
-        btnInsertar.setBounds(new Rectangle(new Point(10, 20), btnInsertar.getPreferredSize()));
+        btnInsertar.setBounds(10, 20, 90, btnInsertar.getPreferredSize().height);
 
         //---- btnModificar ----
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(e -> modificarRelacion(e));
         contentPane.add(btnModificar);
-        btnModificar.setBounds(95, 20, 78, 30);
+        btnModificar.setBounds(105, 20, 95, 30);
 
         //---- btnBorrar ----
         btnBorrar.setText("Borrar");
         btnBorrar.addActionListener(e -> eliminarRelacion(e));
         contentPane.add(btnBorrar);
-        btnBorrar.setBounds(180, 20, 78, 30);
+        btnBorrar.setBounds(205, 20, 90, 30);
 
         //---- btnListado ----
         btnListado.setText("Listado");
+        btnListado.addActionListener(e -> listarGestiones(e));
         contentPane.add(btnListado);
-        btnListado.setBounds(265, 20, 78, 30);
+        btnListado.setBounds(300, 20, 90, 30);
 
         {
             // compute preferred size

@@ -33,7 +33,6 @@ public class Informacion extends JFrame {
         okButton = new JButton();
 
         //======== this ========
-        setUndecorated(true);
         var contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
@@ -61,6 +60,7 @@ public class Informacion extends JFrame {
 
                 //---- textField1 ----
                 textField1.setText("Jon Maneiro Garc\u00eda");
+                textField1.setEditable(false);
                 contentPanel.add(textField1, "cell 1 0 2 1");
 
                 //---- label2 ----
@@ -69,6 +69,7 @@ public class Informacion extends JFrame {
 
                 //---- textField2 ----
                 textField2.setText("0.0.4");
+                textField2.setEditable(false);
                 contentPanel.add(textField2, "cell 1 1");
             }
             dialogPane.add(contentPanel, BorderLayout.CENTER);

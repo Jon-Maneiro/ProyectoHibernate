@@ -203,6 +203,7 @@ public class Proyectos extends JFrame {
 
         Query query = sesion.createQuery(hql);
         List<ProyectosEntity> resultado = query.list();
+        listaProyectos = resultado;
 
         sesion.close();
 
